@@ -208,7 +208,12 @@ export default function App(){
               <span style={{fontSize:".65rem",color:C.textLight,fontFamily:"'Alegreya',serif",fontStyle:"italic"}}>{hist.length>0?`Scene ${hist.length+1}`:""}</span>
             </div>
             <div style={{flex:1,padding:"12px 24px 16px",position:"relative",zIndex:1,overflow:"auto"}}>
-              {page===0&&sc.illustration&&<div style={{textAlign:"center",padding:"8px 0 12px",opacity:.85}} dangerouslySetInnerHTML={{__html:sc.illustration}}/>}
+              {page===0&&(sc.illustrationImg||sc.illustration)&&<div style={{textAlign:"center",padding:"8px 0 14px"}}>
+                {sc.illustrationImg
+                  ?<img src={sc.illustrationImg} alt="" style={{maxWidth:"100%",width:"100%",borderRadius:3,opacity:.92}}/>
+                  :<div style={{opacity:.85}} dangerouslySetInnerHTML={{__html:sc.illustration}}/>
+                }
+              </div>}
               <div style={{fontFamily:"'Alegreya',serif",fontSize:lv.fs,lineHeight:lv.lh,color:C.text,whiteSpace:"pre-line"}} key={`${sid}-${page}`}>
                 <PText text={curPage} onVT={hvt}/>
               </div>
