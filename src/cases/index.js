@@ -1,28 +1,14 @@
 /* ═══════════════════════════════════════════════════
    Case Registry
-   Add new cases here. Each case lives in its own file
-   and exports { meta, scenes }.
+   Add new cases here. Each case exports { meta, scenes }.
    ═══════════════════════════════════════════════════ */
 
 import * as hollowmistBell from "./hollowmist_bell.js";
+import * as thornwickMap from "./thornwick_map.js";
 
 export const CASES = [
   hollowmistBell,
-
-  // Placeholder entries for future cases.
-  // Replace these with real imports as cases are written.
-  {
-    meta: {
-      id: "placeholder_2",
-      number: 2,
-      title: "Case File No. 2",
-      subtitle: "Coming soon",
-      available: false,
-      startScene: "start",
-      estimatedMinutes: 20,
-    },
-    scenes: {},
-  },
+  thornwickMap,
   {
     meta: {
       id: "placeholder_3",
