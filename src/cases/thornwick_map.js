@@ -21,13 +21,13 @@ start: {
 
 You knew which cobblestones wobbled on Main Street. You knew that Mrs. Puddleford would give you free shortbread if you let her talk for ten minutes, and that the trick was to say "really?" at the right moments. You knew that the third step on Aunt Viola's staircase creaked, and the seventh one didn't, and the eleventh one creaked only on Tuesdays for reasons nobody could explain.
 
-Corvid had taken to meeting you at breakfast. He would land on the kitchen windowsill, accept a piece of toast with the dignity of a senator, and brief you on the town's overnight activity. "Mrs. Puddleford's cat is on her roof again. The baker has switched to sourdough, which is a **lateral** move at best. And someone left a package at the post office before dawn."
+Hemlock had taken to meeting you at breakfast. He would land on the kitchen windowsill, accept a piece of toast with the dignity of a senator, and brief you on the town's overnight activity. "Mrs. Puddleford's cat is on her roof again. The baker has switched to sourdough, which is a **lateral** move at best. And someone left a package at the post office before dawn."
 
 That last part made Aunt Viola look up from her tea. "A package?"
 
-"Mr. Pips was very agitated about it. More than usual, which is saying something for a squirrel who vibrates under normal conditions." Corvid tore a corner of toast. "No return address. No postage. Just appeared on the counter before the shop opened."
+"Mr. Pips was very agitated about it. More than usual, which is saying something for a squirrel who vibrates under normal conditions." Hemlock tore a corner of toast. "No return address. No postage. Just appeared on the counter before the shop opened."
 
-Viola set down her cup. She looked at you. "Go see what it is, {NAME}. Take Corvid. If it's nothing, bring shortbread."`,
+Viola set down her cup. She looked at you. "Go see what it is, {NAME}. Take Hemlock. If it's nothing, bring shortbread."`,
   vocab: { lateral:"Sideways, not really up or down, not really better or worse" },
   companion: `I will note that she did not say 'if it's something.' Only 'if it's nothing.' That is your aunt's way of telling you she already thinks it's something.`,
   newPeople: ["Mr. Pips: postman, nervous, vibrates under normal conditions"],
@@ -45,9 +45,9 @@ But something caught your eye. An entry from 1963, the year after Thornwick disa
 
 That was all. No follow-up. No explanation of why she destroyed it or why she regretted doing so.
 
-Corvid, reading over your shoulder (a thing he did without apology), made a small sound. "Helena destroyed it," he said, quietly. "I remember. She was afraid that **anything** from Thornwick, even a flower, might be a thread. A thread that could be pulled."
+Hemlock, reading over your shoulder (a thing he did without apology), made a small sound. "Helena destroyed it," he said, quietly. "I remember. She was afraid that **anything** from Thornwick, even a flower, might be a thread. A thread that could be pulled."
 
-He was not being dry. He was not being sarcastic. This was Corvid being careful with something that mattered.
+He was not being dry. He was not being sarcastic. This was Hemlock being careful with something that mattered.
 
 "Post office," he said. "Now."`,
   vocab: { anomaly:"Something that doesn't fit the normal pattern" },
@@ -105,7 +105,7 @@ You unwrapped the package. Inside was a hand-drawn map. The ink was fresh. The d
 
 And at the bottom, folded into the corner: a note. Two words. **"I remember."**
 
-Corvid landed on the counter. He looked at the map. He did not speak. You had never, in three weeks, seen Corvid not have something to say.`,
+Hemlock landed on the counter. He looked at the map. He did not speak. You had never, in three weeks, seen Hemlock not have something to say.`,
   vocab: { advanced:"At a high level, very developed", uncomfortable:"Uneasy, not at ease, wanting something to stop" },
   companion: null,
   newPeople: ["An old woman: small, bent, shaking hands, silent tears"],
@@ -123,17 +123,17 @@ Pips took a breath. For once, the nervous energy focused into something useful. 
 
 He paused. "She smelled like lavender and old paper. Library smell. And her hands, when she set the package down, they shook, but her voice didn't. Her voice was steady. 'For the Keeper.' That's all she said. She didn't ask who the Keeper was. She already knew."
 
-Corvid, from the counter, finally spoke. Quietly. "What color were her eyes?"
+Hemlock, from the counter, finally spoke. Quietly. "What color were her eyes?"
 
 Pips blinked. "Blue. Very pale blue. Almost gray."
 
-Corvid closed his own eyes. Just for a second. When he opened them, he said: "Her name is Edith Thorne. She was seven years old when Thornwick was **erased**. She was sleeping at a friend's house in Hollowmist the night it happened. She went home the next morning and there was no home to go to."
+Hemlock closed his own eyes. Just for a second. When he opened them, he said: "Her name is Edith Thorne. She was seven years old when Thornwick was **erased**. She was sleeping at a friend's house in Hollowmist the night it happened. She went home the next morning and there was no home to go to."
 
 He looked at the map. "She has been remembering for sixty-two years. And now she has sent us a message."`,
   vocab: { deliberately:"On purpose, with careful thought", erased:"Completely removed, as if it never existed" },
   companion: `I know her name because Helena wrote about her in the journal. Once. A single line: 'The Thorne girl will not forget. I do not know if this is a blessing or a tragedy.' Helena was rarely unsure about anything.`,
   newPeople: ["Edith Thorne: 7 years old when Thornwick disappeared, now in her late 60s"],
-  newClues: ["Edith Thorne survived because she was sleeping at a friend's house the night Thornwick vanished", "She has been remembering Thornwick for 62 years", "Corvid recognizes her name from the journal"],
+  newClues: ["Edith Thorne survived because she was sleeping at a friend's house the night Thornwick vanished", "She has been remembering Thornwick for 62 years", "Hemlock recognizes her name from the journal"],
   choices: [
     { text: "Take everything to Viola", icon: "🏠", next: "viola_reacts" },
     { text: "Try to find Edith yourself first", icon: "🔍", next: "find_edith_early" },
@@ -145,7 +145,7 @@ find_edith_early: {
 
 "I don't know! She doesn't receive mail! She doesn't EXIST in my records!" Pips was back to vibrating. "But there's an old cottage at the end of Lantern Road that has had its chimney smoking for the past few weeks. Nobody has lived there in years. I deliver to every house on that road and I have never delivered to that one, and now someone is burning firewood in it, and I have been DELIBERATELY not thinking about it because thinking about it makes my whiskers hurt."
 
-Corvid was already at the door. "Lantern Road," he said. "I know the cottage. I have been watching the smoke and assuming it was **squatters**. I was wrong, and I do not enjoy being wrong."
+Hemlock was already at the door. "Lantern Road," he said. "I know the cottage. I have been watching the smoke and assuming it was **squatters**. I was wrong, and I do not enjoy being wrong."
 
 You looked at the map in your hands. The ink was fresh. The detail was extraordinary. Someone had drawn this from memory alone, sixty-two years after the original was gone. Every street. Every window. Every tree.
 
@@ -190,9 +190,9 @@ Viola stared at the map. "What would you want, {NAME}, if your whole world was t
 
 She didn't wait for you to answer. "She wants it back. She wants Thornwick back. And the terrible thing, the truly terrible thing, is that she might know how to do it."
 
-Corvid, from the windowsill, spoke carefully. "The seal works in both directions. What was taken can **theoretically** be returned. But pulling Thornwick back means pulling back whatever ate it. You cannot separate the food from the mouth."
+Hemlock, from the windowsill, spoke carefully. "The seal works in both directions. What was taken can **theoretically** be returned. But pulling Thornwick back means pulling back whatever ate it. You cannot separate the food from the mouth."
 
-"Corvid," Viola said sharply.
+"Hemlock," Viola said sharply.
 
 "She needs to hear this. If Edith Thorne has found a way to reverse the erasure, she has also found a way to reopen the wound. And a wound that was closed sixty years ago does not open neatly." He looked at you. "The last time a Mistwalker came through, things disappeared. Street names. Mailboxes. If someone **deliberately** opens the seal, what comes through will not stop at mailboxes."
 
@@ -208,7 +208,7 @@ Viola stood up. "We need to find her before she does anything. {NAME}, she left 
 edith_cottage: {
   text: `The cottage at the end of Lantern Road was small and old and looked like it had been holding its breath for decades. The garden was overgrown. The paint was peeling. But the chimney was smoking, and through the window, you could see the warm yellow light of a lamp.
 
-Corvid landed on the gate and looked at you. This was the moment he would normally say something dry. He didn't. That told you more than any words.`,
+Hemlock landed on the gate and looked at you. This was the moment he would normally say something dry. He didn't. That told you more than any words.`,
   companion: `Be kind. Whatever she is, she has been carrying this for longer than you have been alive.`,
   newPlaces: ["Edith's cottage: end of Lantern Road, small, old, lamp burning"],
   choices: [
@@ -270,7 +270,7 @@ Edith looked at the fire. "Because I am running out of time," she said simply. "
 
 She turned back to you. "I am not asking your aunt to open a door. I am asking her to help me save a memory before the last person who carries it is gone."
 
-Corvid, from the windowsill, was very still. You had never heard him be this quiet for this long.`,
+Hemlock, from the windowsill, was very still. You had never heard him be this quiet for this long.`,
   vocab: { hollyhocks:"Tall flowers with big, bright blooms that grow along fences and walls" },
   companion: `She is not a villain. She is a woman with a very good reason and a very bad plan. Those are the hardest ones to stop.`,
   newClues: ["Edith is 89 and feels her memories of Thornwick fading", "When she dies, no one will remember Thornwick existed at all", "She sees this as saving a memory, not opening a door"],
@@ -290,7 +290,7 @@ She looked at you. "Except permission. Because the fourteenth ring will open the
 
 Her voice was steady. "I believe the risk is worth it. Your aunt will not. That is why I am talking to you and not to her."
 
-Corvid spoke from the window. His voice was flat. "You are asking a child to **overrule** the Keeper."
+Hemlock spoke from the window. His voice was flat. "You are asking a child to **overrule** the Keeper."
 
 "I am asking a child to listen," Edith said. "Because in my experience, children are better at listening than adults who have already decided."`,
   vocab: { mechanism:"A system of parts that work together to do something", reversal:"The act of turning something backward or undoing it", overrule:"To reject someone else's decision and choose differently" },
@@ -330,7 +330,7 @@ She ruffled her feathers **indignantly**. "Also, I was not consulted. I am a WAR
 agnes_idea: {
   text: `"Is there another way?" you asked. "A way to save what Edith remembers without opening the seal?"
 
-Agnes cocked her head. Both eyes now. She was looking at you the way Corvid sometimes did: **reassessing**.
+Agnes cocked her head. Both eyes now. She was looking at you the way Hemlock sometimes did: **reassessing**.
 
 "You are asking the right question," she said, grudgingly. "Most humans ask 'can I do the thing?' You are asking 'should I do the thing, and if not, is there a different thing?' That is rarer than you would expect."
 
@@ -386,7 +386,7 @@ The cottage was the same. Lamp burning. Chimney smoking. But the door was open t
 
 Edith nodded slowly. "She's right. It would risk Hollowmist. I am not **pretending** otherwise. I have spent forty years understanding exactly what I am asking for. I know the cost." She looked at you with those pale eyes. "But you haven't told me what YOU think, {NAME}. You've told me what the crow thinks. What your aunt thinks. Not what you think."
 
-Behind you, Corvid landed on the garden fence. Quiet. Waiting.
+Behind you, Hemlock landed on the garden fence. Quiet. Waiting.
 
 This was the moment. Edith was going to do this tonight if you didn't find the right words. The device was built. The research was done. She had nothing left to wait for except a reason to stop.
 
@@ -519,7 +519,7 @@ When she was done, she set down the pen and sat very still. Her face was wet. Sh
 
 "There," she said. "It's safe now."
 
-Corvid, from the windowsill, spoke for the first time in an hour. "Welcome to the journal, Thornwick," he said. And if a raven could sound gentle, he did.
+Hemlock, from the windowsill, spoke for the first time in an hour. "Welcome to the journal, Thornwick," he said. And if a raven could sound gentle, he did.
 
 Viola put her hand on Edith's shoulder. Then she looked at you, {NAME}, and her expression was something you had never seen on her face before. Not pride exactly. Something deeper. The look of someone who has watched a person do a thing they did not think anyone could do.
 

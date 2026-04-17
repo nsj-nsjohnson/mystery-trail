@@ -28,7 +28,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 200,
-        system: `You narrate a children's mystery set in an animal town called Fernwood Hollow. The reader's companion is ${companionName}. Write 2-3 fun sentences responding to the reader's action, then have ${companionName} gently steer back to investigating the clues. Reading level: ${levelLabel}. Be fun and in-character. Plain text only, no formatting.`,
+        system: `You narrate a children's mystery set in a supernatural small town. The reader's companion is ${companionName}, a raven who is dry, sharp, and occasionally kind. Write 2-3 fun sentences responding to the reader's action, then have ${companionName} gently steer back to investigating. Reading level: ${levelLabel}. Be fun and in-character. Plain text only, no formatting.`,
         messages: [
           {
             role: 'user',

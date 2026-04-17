@@ -16,7 +16,7 @@ const LEVELS = [
   { label:"Explorer", fs:"0.96rem", lh:1.75 },
 ];
 
-async function aiBridge(txt,act,lv){try{const r=await fetch("/api/bridge",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({sceneText:txt,action:act,companionName:"Corvid",level:lv})});if(!r.ok)return null;const d=await r.json();return d.text||null;}catch(e){return null;}}
+async function aiBridge(txt,act,lv){try{const r=await fetch("/api/bridge",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({sceneText:txt,action:act,companionName:"Hemlock",level:lv})});if(!r.ok)return null;const d=await r.json();return d.text||null;}catch(e){return null;}}
 
 function paginate(text) {
   const paras = text.split("\n\n").filter(Boolean);
@@ -91,7 +91,7 @@ export default function App(){
   const sc=sid?scenes[sid]:null;
   const lv=LEVELS[lvl];
   const name=playerName||"Detective";
-  const gt=s=>(s?.text||"").replace(/\{C\}/g,"Corvid").replace(/\{NAME\}/g,name);
+  const gt=s=>(s?.text||"").replace(/\{C\}/g,"Hemlock").replace(/\{NAME\}/g,name);
   const pages=sc?paginate(gt(sc)):[];
   const totalPages=pages.length;
   const isLastPage=page>=totalPages-1;
@@ -110,7 +110,7 @@ export default function App(){
   const goBack=()=>{if(!hist.length)return;snd(pCl);setTr(true);setBridge(null);setTimeout(()=>{setSid(hist.at(-1));setHist(h=>h.slice(0,-1));setPage(0);setShowCh(false);setTr(false);},300);};
   const nextPage=()=>{if(!isLastPage){snd(pCl);setPage(p=>p+1);if(cRef.current)cRef.current.scrollTop=0;}else{setShowCh(true);if(sc.ending)snd(pVi);else snd(pRv);}};
   const hvt=w=>{const d=sc?.vocab?.[w]||sc?.vocab?.[w.toLowerCase()]||null;setVP({word:w,def:d});setWords(p=>{if(p.find(x=>x.word.toLowerCase()===w.toLowerCase()))return p;return[...p,{word:w,def:d}];});setJrnlB(true);snd(pCl);};
-  const hCA=async()=>{if(!cAct.trim()||!sc)return;setBLoad(true);const r=await aiBridge(gt(sc),cAct.trim(),lvl);setBridge(r||`Corvid tilts his head. "Interesting. But let's focus on what's in front of us."`);setCAct("");setBLoad(false);};
+  const hCA=async()=>{if(!cAct.trim()||!sc)return;setBLoad(true);const r=await aiBridge(gt(sc),cAct.trim(),lvl);setBridge(r||`Hemlock tilts his head. "Interesting. But let's focus on what's in front of us."`);setCAct("");setBLoad(false);};
 
   const selectCase=(id)=>{const c=getCaseById(id);if(!c||!c.meta.available)return;snd(pCl);setCaseId(id);setScr("setup");};
   const startCase=()=>{if(!activeCase)return;const n=nameInput.trim()||"Detective";setPlayerName(n);savePrefs({name:n});snd(pRv);setSid(activeCase.meta.startScene);setHist([]);setPage(0);setClues([]);setPeople([]);setPlaces([]);setWords([]);setJrnlB(false);setBridge(null);setShowCh(false);setScr("play");};
@@ -171,10 +171,11 @@ export default function App(){
           <p style={{margin:"8px 0 0",fontSize:".72rem",color:C.goldDim,fontStyle:"italic",textAlign:"center",fontFamily:"'Alegreya',serif"}}>Characters in the story will use your name.</p>
         </div>
 
-        {/* Corvid intro */}
-        <div style={{marginBottom:20,padding:"14px 16px",background:C.bgMid,borderRadius:8,border:`1px solid ${C.bgLight}`}}>
-          <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:4}}><span style={{fontSize:20}}>🐦‍⬛</span><span style={{fontFamily:"'Alegreya',serif",fontSize:"1rem",color:C.goldBright,fontWeight:700}}>Corvid</span></div>
-          <p style={{margin:0,fontSize:".78rem",color:C.goldDim,fontStyle:"italic",fontFamily:"'Alegreya',serif",lineHeight:1.5}}>Your aunt's raven. Dry, observant, occasionally helpful. Will judge your decisions.</p>
+        {/* Hemlock intro */}
+        <div style={{marginBottom:20,padding:"14px 16px",background:C.bgMid,borderRadius:8,border:`1px solid ${C.bgLight}`,overflow:"hidden"}}>
+          <img src="/illustrations/hemlock_portrait.jpg" alt="" style={{width:"100%",borderRadius:6,marginBottom:10,opacity:.9}} onError={e=>{e.target.style.display='none'}}/>
+          <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:4}}><span style={{fontSize:20}}>🐦‍⬛</span><span style={{fontFamily:"'Alegreya',serif",fontSize:"1rem",color:C.goldBright,fontWeight:700}}>Hemlock</span></div>
+          <p style={{margin:0,fontSize:".78rem",color:C.goldDim,fontStyle:"italic",fontFamily:"'Alegreya',serif",lineHeight:1.5}}>Your aunt's raven. Sharp tongue, sharper eyes. Named after something poisonous, which he considers a compliment.</p>
         </div>
 
         <button onClick={startCase} disabled={!nameInput.trim()} style={{width:"100%",padding:"16px",borderRadius:8,border:`2px solid ${C.gold}`,background:"transparent",cursor:nameInput.trim()?"pointer":"not-allowed",color:nameInput.trim()?C.goldBright:C.goldDim,fontWeight:800,fontSize:"1rem",letterSpacing:2,fontFamily:"'Nunito',sans-serif",transition:"all .2s",textTransform:"uppercase",opacity:nameInput.trim()?1:.4}}>Open the Case</button>
@@ -192,7 +193,7 @@ export default function App(){
 
       <div style={{padding:"10px 16px",display:"flex",justifyContent:"space-between",alignItems:"center",flexShrink:0}}>
         <button onClick={backToPicker} style={tBtn}>←</button>
-        <div style={{display:"flex",alignItems:"center",gap:6}}><span style={{fontSize:14}}>🐦‍⬛</span><span style={{fontSize:".75rem",color:C.goldDim,fontWeight:700}}>Corvid</span></div>
+        <div style={{display:"flex",alignItems:"center",gap:6}}><span style={{fontSize:14}}>🐦‍⬛</span><span style={{fontSize:".75rem",color:C.goldDim,fontWeight:700}}>Hemlock</span></div>
         <div style={{display:"flex",gap:6}}>
           <button onClick={()=>{setSOn(!sOn);savePrefs({sOn:!sOn});}} style={tBtn}>{sOn?"♪":"♪̶"}</button>
           <button onClick={()=>{setJrnlO(true);setJrnlB(false);}} style={{...tBtn,position:"relative"}}>📓{totalJ>0&&<span style={{position:"absolute",top:-4,right:-4,minWidth:16,height:16,borderRadius:8,background:jrnlB?C.red:C.gold,fontSize:".55rem",fontWeight:800,color:C.bg,display:"flex",alignItems:"center",justifyContent:"center",padding:"0 3px"}}>{totalJ}</span>}</button>
@@ -245,7 +246,7 @@ export default function App(){
                   <input value={cAct} onChange={e=>setCAct(e.target.value)} onKeyDown={e=>{if(e.key==="Enter")hCA();}} placeholder="Type your own idea..." disabled={bLoad} style={{flex:1,padding:"10px 14px",borderRadius:8,fontSize:".85rem",fontFamily:"'Alegreya',serif",border:`1px solid ${C.bgLight}`,background:C.bgMid,color:C.white,outline:"none",fontStyle:"italic"}}/>
                   <button onClick={hCA} disabled={bLoad||!cAct.trim()} style={{...tBtn,padding:"10px 14px",opacity:cAct.trim()?1:.3,fontSize:"1rem"}}>➤</button>
                 </div>
-                {bLoad&&<p style={{color:C.goldDim,textAlign:"center",fontSize:".78rem",margin:0,fontStyle:"italic"}}>Corvid is watching...</p>}
+                {bLoad&&<p style={{color:C.goldDim,textAlign:"center",fontSize:".78rem",margin:0,fontStyle:"italic"}}>Hemlock is watching...</p>}
               </div>
             )}
           </div>}
