@@ -17,6 +17,7 @@ export const meta = {
 export const scenes = {
 
 start: {
+  mood: "warm",
   text: `The bus left you at the edge of Hollowmist just as the sun was bleeding out behind the pines. You dragged your suitcase down Main Street, wheels rattling over cobblestones that did not all sit flat, and tried to remember why you'd agreed to spend the summer with a great-aunt you had met exactly once, at a funeral, when you were four.
 
 A raven landed on your suitcase. He was large and black and looked at you the way a substitute teacher looks at the class on the first day: sizing things up and already regretting everything. "You're late," he said. Because in Hollowmist, apparently, ravens talked. "I'm Hemlock. Your aunt sent me. She's busy. Something about a missing cat and a bell that has opinions." He lifted off the suitcase, circled once, and landed on the gate of a narrow, three-story house at the top of the lane.
@@ -38,6 +39,7 @@ On the kitchen table, in the middle of a mess of maps and old photographs, sat a
 },
 
 explore_house: {
+  mood: "eerie",
   text: `You left the notebook alone. For now.
 
 The house was three stories of organized chaos. The first floor was books, maps, and things in jars you chose not to examine. The second floor had bedrooms. Yours was small and clean with a window overlooking the garden. From this height, the garden was even stranger. The plants were arranged in a **spiral**, and at the center was a stone birdbath filled with water that was not quite the right color.
@@ -57,6 +59,7 @@ From downstairs, Viola called: "TEA. NOW. And stop sniffing around the third flo
 },
 
 cold_door: {
+  mood: "eerie",
   text: `You crept back up to the third floor. The cold was stronger now, pressing through the wood like winter leaking from a crack. You tried the handle. Locked. But the lock was old, and the keyhole was wide, and when you pressed your eye to it, you could see through to the other side.
 
 The room beyond was not a room. It was stone. Rough, carved-out stone, lit by a faint silver glow that had no source. The floor was marked with a circle of symbols, and inside that circle, the air **shimmered**. Like heat off a summer road, except this shimmer was cold, and it moved in slow pulses, like something breathing.
@@ -80,6 +83,7 @@ In the kitchen, Viola was holding the notebook and staring at you with the expre
 },
 
 sneak_journal: {
+  mood: "warm",
   text: `You opened it.
 
 The first page: **Helena Ashford, Keeper of Hollowmist. This Journal records all anomalies. If found, return to Thornberry Lane. Do not speak of what you have seen.** The handwriting was old and careful. Not Viola's.
@@ -101,6 +105,7 @@ Hemlock landed on the windowsill. He looked at the journal, open in your hands. 
 },
 
 ask_viola: {
+  mood: "warm",
   text: `Viola hung up the phone, turned around, and found you sitting at the table with the journal open in front of you. Her face went through approximately four emotions in two seconds: surprise, anger, resignation, and something that looked almost like relief.
 
 "You read it," she said.
@@ -129,6 +134,8 @@ Viola was quiet for a long time. "She stopped him. The last time he came. She su
 },
 
 sneak_out: {
+  question: "The tower door hinges were oiled. Why would someone oil hinges that have been creaking for centuries?",
+  mood: "forest",
   illustrationImg: "/illustrations/c1_tower.jpg",
   
   text: `The evening air was cool and wet and smelled like pine needles and pennies. Hemlock flew ahead, a black shape against the darkening sky.
@@ -150,6 +157,8 @@ Inside: a spiral staircase winding up into the dark. The walls were covered in t
 },
 
 tower_alone: {
+  question: "If the feather is cold because part of it is 'somewhere else,' what does that tell you about the creature that left it?",
+  mood: "eerie",
   illustrationImg: "/illustrations/c1_feather.jpg",
   
   text: `At the top: the bell chamber. A single iron bell the size of a dinner table hung from thick chains. Beside it, on a wooden stand, a ledger lay open. Rows of pencil entries, one per night. 12. 12. 12. 12. For years. Then last night. "13." Written in something rust-colored and thin. Not pencil. Not ink.
@@ -167,12 +176,13 @@ You looked at the feather. You looked at the rag. The feather was RIGHT there.`,
   companion: `I cannot stress this enough. Do not touch it with your hands. I realize I have the credibility problem of having also told you not to go to the tower and here we are. But THIS time I mean it.`,
   newClues: ["The '13' was written in blood, like a signature", "A cold black feather that absorbs light", "Hemlock says touching it will alert whatever left it"],
   choices: [
-    { text: "Touch it anyway", icon: "✋", next: "touch_feather" },
-    { text: "Wrap it in the rag like Hemlock said", icon: "🧤", next: "wrap_feather" },
+    { text: "Touch it anyway", icon: "✋", next: "touch_feather", highStakes: true, flags: { touched_feather: true } },
+    { text: "Wrap it in the rag like Hemlock said", icon: "🧤", next: "wrap_feather", flags: { touched_feather: false } },
   ],
 },
 
 touch_feather: {
+  mood: "dark",
   text: `You touched it.
 
 The world went sideways. Your vision whited out, then went dark, and in that dark you saw: a pair of eyes the color of smoke, a glass bottle with something orange and glowing trapped inside, and a thin smile that was too wide for the face it was on. The smile spoke. "I see you, {NAME}." Then it was over. You were on the bell chamber floor, feather in your hand, heart slamming.
@@ -194,6 +204,7 @@ From the bottom of the tower: the sound of a door opening on oiled hinges. Foots
 },
 
 wrap_feather: {
+  mood: "eerie",
   text: `You grabbed the rag from the ledger stand, wrapped it around your hand, and picked up the feather. No vision. No white flash. Just a feather in a cloth, cold enough to feel through the fabric, but contained.
 
 Hemlock exhaled. You didn't know ravens could sigh with relief, but this one did. "Good. Smart. That rag is cotton and cotton doesn't **conduct**. He didn't feel you. We have the feather and he doesn't know we have it."
@@ -212,6 +223,7 @@ Hemlock's head snapped toward the stairwell. "Someone's coming," he hissed. "And
 },
 
 blackthorn_knows: {
+  mood: "dark",
   illustrationImg: "/illustrations/c1_blackthorn.jpg",
   
   text: `Too late for either. The footsteps reached the top and a man stepped into the chamber.
@@ -228,12 +240,13 @@ Hemlock was frozen on the ledger stand. You were alone in this conversation.`,
   newPeople: ["Mr. Blackthorn: tall, black coat, smoke eyes, knows your name"],
   newClues: ["Blackthorn called the tower 'my tower'", "He knew Helena and implies she is dead or gone"],
   choices: [
-    { text: "Pretend to be a dumb tourist kid", icon: "😶", next: "bluff" },
-    { text: "Look him in the eye and say nothing", icon: "👁️", next: "staredown" },
+    { text: "Pretend to be a dumb tourist kid", icon: "😶", next: "bluff", highStakes: true },
+    { text: "Look him in the eye and say nothing", icon: "👁️", next: "staredown", highStakes: true },
   ],
 },
 
 blackthorn_unknown: {
+  mood: "dark",
   illustrationImg: "/illustrations/c1_blackthorn.jpg",
   text: `You pressed yourself behind the bell, heart hammering. Hemlock was a shadow among shadows in the rafters. The footsteps reached the top.
 
@@ -255,15 +268,18 @@ Hemlock dropped from the rafters. "He doesn't know it was you," he whispered. "H
 },
 
 bluff: {
-  text: `"I'm just, um, visiting," you said. "My aunt said the tower had a nice view."
+  mood: "dark",
+  text: `"I'm just, um, visiting," you said. You made your voice small. Unsure. The kind of voice a kid uses when they're lost and definitely not investigating a supernatural crime scene. "My aunt said the tower had a nice view. Of the, uh. Town."
 
-Blackthorn studied you. The smoke in his eyes shifted. Then he smiled wider, and you noticed too many teeth.
+You held the feather behind your back. Casual. Very casual. Nothing to see here.
 
-"A tourist," he said. "How **delightful**." He did not believe you. But he stepped aside and gestured toward the stairs like a doorman at a haunted hotel. "By all means. Do give Viola my regards."
+Blackthorn studied you for a long, terrible moment. The smoke in his eyes shifted like clouds rearranging themselves. You could feel him deciding whether you were worth the trouble. Then he smiled wider, and you noticed his teeth were very straight and very white and there were slightly too many of them. Not a lot too many. Just enough to make your stomach drop.
 
-You were halfway down the stairs when you heard it: BONG. The bell. He was ringing it, in the middle of the evening, for no reason except to show you he could.
+"A tourist," he said. "How **delightful**." He did not believe you for one single second. But he stepped aside. He gestured toward the stairs with one long arm, like a doorman at a very expensive and very haunted hotel. "Then by all means, enjoy the view. Do give Viola my regards."
 
-"Move," Hemlock hissed. "**Move**."`,
+You walked, not ran, down the stairs. Measured steps. Tourist steps. Your hands were shaking so hard you had to ball them into fists. You were halfway down when you heard it: BONG. The bell. He was ringing it. In the middle of the evening. For no reason except to show you he could.
+
+"Move," Hemlock hissed in your ear. "**Move**."`,
   vocab: { delightful:"Very pleasant (but when Blackthorn says it, he means the opposite)" },
   companion: `He let us go. That is not kindness. That is him not being worried. Much worse than kindness.`,
   newClues: ["Blackthorn let you go but rang the bell as you left, a show of power"],
@@ -273,17 +289,22 @@ You were halfway down the stairs when you heard it: BONG. The bell. He was ringi
 },
 
 staredown: {
-  text: `You didn't speak. You looked at Blackthorn and did not blink. Your hands were shaking but you held them still.
+  mood: "dark",
+  text: `You didn't speak. You looked at Mr. Blackthorn and you did not blink and you did not look away. Your hands were shaking badly enough that you pressed them against your sides to keep them still. Your heart was doing something that felt less like beating and more like trying to escape through your ribs.
 
-Something changed in his face. The pleasant mask **flickered**. For one second, you saw what was under it: not a face exactly, but the shape of where a face should be, like a mask over empty air. Then it was back.
+But your eyes stayed on his. And you held.
 
-"You are not afraid," he said.
+Something changed in his face. The pleasant mask **flickered**. Just for a second, like a lightbulb with a loose connection, you saw what was underneath: not a face exactly, but the shape of where a face should be. An outline. A suggestion. Like a mask over empty air, and behind the air, nothing at all. Then the mask was back, and he was smiling again, but the smile had changed. It was smaller. More careful.
 
-"I am," you said. "But I'm staying anyway."
+"You are not afraid," he said. It was not a question.
 
-Silence. Then: "Then you will regret it. Not today. But soon. I will see you again, {NAME}." He turned and walked toward the bell. You did not wait. You were down those stairs so fast your feet barely touched stone.
+"I am," you said. And your voice, to your absolute amazement, was steady. "But I'm staying anyway."
 
-Behind you: BONG. A **reminder**.`,
+The silence that followed was the loudest thing you had ever heard. It filled the bell chamber. It pressed against the walls. Hemlock, on the ledger stand, had gone so still he looked carved from stone.
+
+"Then you will regret it," Blackthorn said finally. His voice had thinned. The warmth was gone from it. "Not today. But soon. I will see you again, {NAME}." He turned and walked toward the bell. Dismissing you. You did not wait to see what happened next. You were down those stairs so fast your feet barely touched stone, Hemlock's wings beating the air ahead of you.
+
+Behind you, from the top of the tower: BONG. One long, deliberate strike. A **reminder**.`,
   vocab: { flickered:"Went on and off quickly, like a light with a loose connection", reminder:"Something meant to make sure you don't forget" },
   companion: `You looked a Mistwalker in the eye and did not flinch. I am impressed. I am also terrified. Both things are true.`,
   newClues: ["Blackthorn's face flickered: underneath the mask, something empty"],
@@ -293,13 +314,22 @@ Behind you: BONG. A **reminder**.`,
 },
 
 escape: {
-  text: `You ran. Hollowmist at dusk was wrong. The mist had thickened, filling streets like slow water. Things were different. Small things.
+  mood: "tense",
+  text: `You ran.
 
-The bench where an old badger had been reading was empty. The newspaper was still there, open to a page that was now **blank**. Every word gone. A street sign that should have said "Hemlock Row" was smooth and featureless. A mailbox was missing entirely. The sidewalk where it had been was smooth, as if it had never existed.
+Hollowmist at dusk was wrong. Not wrong the way a cloudy day is wrong, or the way a strange noise is wrong. Wrong the way a room is wrong when you walk in and someone has moved all the furniture two inches to the left. Everything looks normal. Nothing IS normal.
 
-Past the bakery, where the window display was empty and the baker was staring at his hands like he'd forgotten what they were for. Past the general store, where Mrs. Puddleford was gripping her doorframe, staring at the mist.
+The mist had thickened while you were in the tower, filling the streets like slow water poured from a height. It pooled in doorways. It curled around the bases of lampposts like something tasting the metal. You sprinted through it, Hemlock overhead, and as you ran, you noticed things. Small things. The kind of things your brain catches when it is running at full speed and every sense is turned up to maximum.
 
-"Child," she called out. "Child, WAIT."`,
+The bench where an old badger had been reading was empty. The newspaper was still there, open to a page that was now **blank**. Not torn out. Not removed. Just white paper where words had been, as if the ink itself had been eaten.
+
+A street sign that should have said "Hemlock Row" was smooth and featureless, the metal plate where the name had been engraved now flat and shining, as if it had never been stamped.
+
+A mailbox was missing entirely. Not knocked over. Not stolen. The sidewalk where it had stood was smooth and unbroken, as if no mailbox had ever existed in that spot, as if the ground itself had forgotten.
+
+Past the bakery, where the window display was empty and the baker was standing behind the counter staring at his hands as if he couldn't remember what they were for. Past the general store, where Mrs. Puddleford was in the doorway, gripping the frame with both hands, staring at the mist with the expression of someone who is watching something they have seen before and hoped they would never see again.
+
+"Child," she called out. Her voice cracked. "Child, WAIT."`,
   companion: `Things are disappearing. Not broken. Erased. Like they were never there.`,
   newClues: ["Words vanishing from paper, street names gone, a mailbox erased", "The disappearances are silent, as if the things never existed"],
   newPlaces: ["Hemlock Row: a street whose name is vanishing"],
@@ -310,6 +340,7 @@ Past the bakery, where the window display was empty and the baker was staring at
 },
 
 escape_safe: {
+  mood: "tense",
   text: `You crept down the stairs, one step at a time, listening. Silence. Hemlock flew ahead, checking each landing. At the bottom, the door was ajar. The street was empty. Blackthorn was gone.
 
 You walked fast. Not running. Running attracts attention. Hemlock rode your shoulder, claws tight, scanning the mist. Because mist there was, thick and slow and wrong, curling around lampposts and pooling in doorways.
@@ -330,6 +361,7 @@ Mrs. Puddleford was in the doorway of the general store, gripping the frame. She
 },
 
 puddleford: {
+  mood: "tense",
   text: `Mrs. Puddleford pulled you into the shop and shut the door. She was a large marmot with flour on her apron and the look of someone who had been brave all day and was running out.
 
 "I know what's happening," she said, without preamble. "I was here the last time. 1987. I was a girl. Younger than you." She gripped the counter. "Things disappeared then, too. The name of my street. My mother's handwriting in a recipe book. A tree in our garden that had been there for a hundred years. Just gone. And then Viola's aunt stopped it, and everything came back, and we all agreed to never speak of it."
@@ -347,6 +379,8 @@ She held the door open. "Go home, child. Tell your aunt everything. And be brave
 },
 
 home_angry: {
+  question: "You made a mistake going to the tower alone. But you also found things Viola needed. Can a mistake be useful?",
+  mood: "warm",
   text: `You slammed through the front door and stood in the hallway, chest heaving. Aunt Viola was at the end of the hall. Arms crossed. Face like a storm.
 
 "You went to the tower," she said. Not a question. "Without telling me."
@@ -366,6 +400,8 @@ She pulled a key from around her neck and walked toward the back of the house, p
 },
 
 basement: {
+  question: "Three Wardens hold the seal. One is gone. What happens to a chain when you remove one link?",
+  mood: "eerie",
   illustration: `<svg viewBox="0 0 280 170" xmlns="http://www.w3.org/2000/svg" style="max-width:250px">
   <g fill="none" stroke="#2C1810" stroke-width="1.5" stroke-linecap="round">
     <!-- outer circle -->
@@ -414,12 +450,36 @@ She set the nail in your hand. It was colder than the room and heavier than it s
   newPeople: ["Helena Ashford: previous Keeper, carried this nail, didn't return"],
   newClues: ["Three Wardens hold the seal: cat (taken), owl, crow", "Iron breaks Blackthorn's glass bottle", "He's going for the owl tonight"],
   choices: [
+    { text: "Find Blackthorn's workshop", icon: "🔍", next: "garden" },
+    { text: "Visit Miss Lune the clockmaker", icon: "⏰", next: "garden" },
+  ],
+},
+
+garden: {
+  mood: "relief",
+  text: `You didn't go immediately. You couldn't. Your legs needed a minute and your brain needed longer.
+
+You sat on the back step of Aunt Viola's house, the iron nail in your lap, and looked at the garden. The strange plants were still. The birdbath water was the wrong color. A moth the size of your hand drifted past, and one of the plants tracked it with its petals, slowly, like a sunflower following a sun that only it could see.
+
+Hemlock landed on the step beside you. He did not speak. This was unusual enough that you looked at him. He was watching the garden too, his head tilted at the angle he used when he was thinking about something he wasn't ready to say.
+
+You sat together for a while. The sky turned from gray to lavender to a deep violet that made the garden glow. Somewhere in the town below, a light came on in a window. Then another. People going about their evenings. People who did not know what was under their town, or what had happened in the tower, or what was coming tonight.
+
+"Hemlock," you said. "Were you scared? In the tower?"
+
+He was quiet for a long time. "I am always scared," he said. "I have been your aunt's companion for thirty years. I have seen three Keepers. I have watched this town hold its breath more times than I can count." He turned one black eye toward you. "Being scared is not the problem. Being scared and sitting still is the problem. You did not sit still."
+
+He clicked his beak once. "Eat something. We leave at dusk."`,
+  companion: null,
+  newClues: ["Hemlock has served three Keepers over thirty years"],
+  choices: [
     { text: "Find Blackthorn's workshop", icon: "🔍", next: "find_workshop" },
-    { text: "Visit Miss Lune the clockmaker for information", icon: "⏰", next: "visit_lune" },
+    { text: "Visit Miss Lune first", icon: "⏰", next: "visit_lune" },
   ],
 },
 
 visit_lune: {
+  mood: "warm",
   text: `Miss Lune's shop was a narrow room where every surface ticked. Grandfather clocks, pocket watches, a clock made from a beehive. None of them agreed about the time.
 
 Miss Lune was tall, sharp, and wasted no time. She locked the door behind you and set a bronze **cog** on the counter. "This was wedged in the bell's striker assembly. It's from a Stillwatch, a device that suspends a single second of time. Someone used it to force a thirteenth strike."
@@ -440,6 +500,8 @@ At the door, she put one hand on your shoulder. "Be clever, {NAME}. He's been do
 },
 
 find_workshop: {
+  question: "Blackthorn marked the owl for TONIGHT. Why would he move so fast?",
+  mood: "tense",
   illustrationImg: "/illustrations/c1_bottle.jpg",
   
   text: `Hemlock found it. Of course he did.
@@ -460,11 +522,12 @@ You looked at the date on the owl sketch. Tonight. You looked at the bottle with
   newClues: ["Sketches of all three Wardens: cat crossed off, owl marked TONIGHT", "The glass bottle holds Marmalade, pulsing orange", "Must break bottle during ritual or Blackthorn escapes"],
   choices: [
     { text: "Go home and make a plan with Viola", icon: "📋", next: "plan" },
-    { text: "Smash the bottle right now and free Marmalade", icon: "💥", next: "smash_early" },
+    { text: "Smash the bottle right now and free Marmalade", icon: "💥", next: "smash_early", highStakes: true },
   ],
 },
 
 smash_early: {
+  mood: "tense",
   text: `You grabbed the nail and swung.
 
 Hemlock screamed "NO!" but the nail was already in motion. It hit the glass. The bottle cracked. Orange light burst out like a sunrise in a cellar. The light swirled, condensed, and a very small, very angry orange cat materialized on the workbench, fur standing on end, hissing at everything.
@@ -487,6 +550,7 @@ Marmalade jumped off the bench and streaked out the door ahead of you, ears flat
 },
 
 plan: {
+  mood: "warm",
   text: `Viola drew on the back of an old envelope. An oval clearing. A flat stone. Trees. Three positions: Viola visible at the treeline. You hidden behind a fallen log. Hemlock in the air.
 
 "The ritual takes seven minutes and twenty seconds," she said. "He opens the bottle, sings in a voice that doesn't come from his mouth, and the owl is drawn in as threads of silver light. At the six-minute mark, I say a word. The word is **hawthorn**. When you hear it, you throw. Not before. Not after."
@@ -510,6 +574,8 @@ Hemlock looked at Viola. "Bottles," he said. "Well. That's **thematically** appr
 },
 
 rush_ridge: {
+  companionIfFlag: {"touched_feather":"He knows you are here. He will be looking for you. That makes this harder. Not impossible. Harder."},
+  mood: "forest",
   text: `The walk to Hunter's Ridge took twenty minutes and felt like two hours. The mist was worse. On Main Street, a shop that had displayed pastries that morning was dark and empty. Its sign was gone. The wall was smooth.
 
 Hemlock reported from above: "Hemlock Row has lost two houses. Not destroyed. **Absent**. Gaps in the street like missing teeth."
@@ -528,6 +594,8 @@ The stars came out. The mist came up. The waiting began.`,
 },
 
 clearing: {
+  companionIfFlag: {"touched_feather":"He knows your face, {NAME}. Stay low. Stay hidden. When the word comes, make it count."},
+  mood: "tense",
   illustrationImg: "/illustrations/c1_clearing.jpg",
   
   text: `Eleven minutes to midnight. The air changed.
@@ -552,13 +620,14 @@ Hemlock, high above, gave a short call. A signal: he hasn't noticed you.
   vocab: { wavered:"Became unsteady, lost strength for a moment" },
   companion: null,
   choices: [
-    { text: "Throw NOW, before the word", icon: "⚡", next: "throw_early" },
-    { text: "Wait for 'hawthorn'", icon: "⏳", next: "throw_ontime" },
-    { text: "Wait longer, make absolutely sure", icon: "🎯", next: "throw_late" },
+    { text: "Throw NOW, before the word", icon: "⚡", next: "throw_early", highStakes: true },
+    { text: "Wait for 'hawthorn'", icon: "⏳", next: "throw_ontime", highStakes: true },
+    { text: "Wait longer, make absolutely sure", icon: "🎯", next: "throw_late", highStakes: true },
   ],
 },
 
 throw_early: {
+  mood: "tense",
   illustrationImg: "/illustrations/c1_nail.jpg",
   text: `You threw.
 
@@ -587,6 +656,7 @@ A small orange cat sat beside her, tail twitching. "I was in that THING for TWO 
 },
 
 throw_ontime: {
+  mood: "tense",
   illustrationImg: "/illustrations/c1_nail.jpg",
   text: `**Six minutes.** Viola's head turned. Her eyes found the log. She could not possibly see you in the dark, but her eyes found you anyway.
 
@@ -615,6 +685,7 @@ Hemlock descended from the canopy. He looked at you. "Not bad," he said. "For a 
 },
 
 throw_late: {
+  mood: "tense",
   illustrationImg: "/illustrations/c1_nail.jpg",
   text: `You waited. One more second. Two. You wanted to be SURE.
 
@@ -643,6 +714,7 @@ Marmalade, apparently unfazed, was already grooming one paw. "I was in a BOTTLE,
 },
 
 ending: {
+  mood: "relief",
   illustrationImg: "/illustrations/c1_ending.jpg",
   text: `You stepped out from behind the log. Your legs were shaking.
 
@@ -662,7 +734,21 @@ She turned the journal toward you and held out the pen.
 
 Hemlock landed on the chair beside you. He said nothing, which was, from him, the loudest thing he had ever said.
 
-You picked up the pen.`,
+You picked up the pen.
+
+You wrote your name.
+
+The next morning, Hollowmist was just a town. The mist was just fog, thin and ordinary, burning off by nine. Mrs. Puddleford was sweeping her stoop. The baker's sign was back, and his sourdough was rising. The street signs all had names. The mailbox on Hemlock Row stood where it had always stood, looking like it had never considered being anywhere else.
+
+Hemlock was on the kitchen windowsill when you came down for breakfast, eating a piece of toast with the dignity of a senator. "The baker has returned to sourdough," he reported. "The town survives."
+
+Viola was at the table, reading the journal. Your name was in it now, in your handwriting, on the page after hers. She looked up when you sat down and slid a cup of tea across the table. It was not on fire. This was progress.
+
+"There are blank pages left," she said. Not a statement. An invitation.
+
+Outside, the garden was strange and beautiful and full of plants that watched you walk past. A raven ate toast on the windowsill. An orange cat slept in a sunbeam, having opinions about breakfast. The bell tower stood at the center of town, old and crooked, and tonight it would ring twelve.
+
+Just twelve.`,
   vocab: { bold:"Confident enough to take risks" },
   companion: `Whatever you decide, I will be at this house, and you will be welcome. I do not say that to many people.`,
   ending: true,

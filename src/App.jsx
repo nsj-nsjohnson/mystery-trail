@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import * as Tone from "tone";
 import { CASES, getCaseById } from "./cases/index.js";
 
@@ -18,24 +18,53 @@ const LEVELS = [
 
 async function aiBridge(txt,act,lv){try{const r=await fetch("/api/bridge",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({sceneText:txt,action:act,companionName:"Hemlock",level:lv})});if(!r.ok)return null;const d=await r.json();return d.text||null;}catch(e){return null;}}
 
-function paginate(text) {
+/* ═══ SMART PAGINATION ═══
+   Target ~150-180 words per page.
+   If scene has illustration, first page targets ~100 words.
+   Never splits a paragraph. */
+function paginate(text, hasIllustration) {
   const paras = text.split("\n\n").filter(Boolean);
   const pages = [];
-  let i = 0;
-  while (i < paras.length) {
-    let take = 2;
-    if (i + 2 < paras.length && paras[i + 2].length < 100) take = 3;
-    if (i + take > paras.length) take = paras.length - i;
-    pages.push(paras.slice(i, i + take).join("\n\n"));
-    i += take;
+  let current = [];
+  let currentWords = 0;
+  const firstPageTarget = hasIllustration ? 100 : 160;
+  const normalTarget = 160;
+
+  for (let i = 0; i < paras.length; i++) {
+    const paraWords = paras[i].split(/\s+/).length;
+    const target = pages.length === 0 ? firstPageTarget : normalTarget;
+
+    current.push(paras[i]);
+    currentWords += paraWords;
+
+    const nextParaWords = i + 1 < paras.length ? paras[i + 1].split(/\s+/).length : 0;
+
+    // Break page if we've hit the target and adding next paragraph would overshoot significantly
+    if (currentWords >= target || (currentWords >= target * 0.7 && currentWords + nextParaWords > target * 1.4)) {
+      pages.push(current.join("\n\n"));
+      current = [];
+      currentWords = 0;
+    }
   }
-  return pages;
+  if (current.length > 0) {
+    // If leftover is very small, merge with previous page
+    const leftoverWords = current.join(" ").split(/\s+/).length;
+    if (pages.length > 0 && leftoverWords < 50) {
+      pages[pages.length - 1] += "\n\n" + current.join("\n\n");
+    } else {
+      pages.push(current.join("\n\n"));
+    }
+  }
+  return pages.length > 0 ? pages : [text];
 }
 
+/* ═══ TEXT WITH VOCAB HIGHLIGHTS ═══ */
 function PText({text,onVT}){return<>{text.split(/(\*\*[^*]+\*\*)/).map((s,i)=>{const m=s.match(/^\*\*(.+)\*\*$/);return m?<span key={i} onClick={e=>{e.stopPropagation();onVT?.(m[1]);}} style={{color:C.gold,fontWeight:700,cursor:"pointer",borderBottom:`1.5px dashed ${C.goldDim}`,transition:"color 0.2s"}}>{m[1]}</span>:<span key={i}>{s}</span>;})}</>;}
 
+/* ═══ VOCAB POPUP ═══ */
 function VPop({word,def,onClose}){if(!word)return null;return<div onClick={onClose} style={{position:"fixed",inset:0,zIndex:200,display:"flex",alignItems:"center",justifyContent:"center",background:"rgba(0,0,0,.5)",padding:20}}><div onClick={e=>e.stopPropagation()} style={{background:C.paper,borderRadius:8,padding:"24px",maxWidth:320,border:`2px solid ${C.goldDim}`,boxShadow:`0 0 30px rgba(212,168,71,0.15)`,animation:"popIn .2s ease"}}><div style={{display:"flex",alignItems:"center",gap:10,marginBottom:10}}><div style={{width:6,height:6,borderRadius:3,background:C.gold}}/><h3 style={{margin:0,fontFamily:"'Alegreya',serif",fontSize:"1.3rem",color:C.text,fontStyle:"italic"}}>{word}</h3></div><p style={{margin:0,fontSize:".95rem",lineHeight:1.7,color:C.textMid,fontFamily:"'Alegreya',serif"}}>{def||"Keep reading to find out..."}</p><div style={{marginTop:14,fontSize:".75rem",color:C.goldDim,fontWeight:700,fontFamily:"'Nunito',sans-serif"}}>✦ Added to your journal</div></div></div>;}
 
+/* ═══ FIELD JOURNAL — 4 tabs ═══ */
 function Journal({open,onClose,clues,people,places,words}){
   const[tab,setTab]=useState("clues");
   if(!open)return null;
@@ -55,8 +84,67 @@ function Journal({open,onClose,clues,people,places,words}){
   </div></div>;
 }
 
-let aOk=false,sC,sR,sV;async function iA(){if(aOk)return;await Tone.start();sC=new Tone.Synth({oscillator:{type:"triangle"},envelope:{attack:.01,decay:.1,sustain:0,release:.08},volume:-18}).toDestination();sR=new Tone.PolySynth(Tone.Synth,{oscillator:{type:"sine"},envelope:{attack:.04,decay:.3,sustain:.08,release:.4},volume:-16}).toDestination();sV=new Tone.PolySynth(Tone.Synth,{oscillator:{type:"triangle"},envelope:{attack:.04,decay:.25,sustain:.15,release:.7},volume:-14}).toDestination();aOk=true;}
+/* ═══ POST-GAME SUMMARY ═══ */
+function Summary({path,scenes,onClose}){
+  if(!path||path.length===0)return null;
+  return<div style={{background:C.bgMid,borderRadius:8,padding:"16px 18px",marginBottom:12,border:`1px solid ${C.bgLight}`}}>
+    <h3 style={{margin:"0 0 10px",fontFamily:"'Alegreya',serif",fontSize:".95rem",color:C.goldBright,fontStyle:"italic"}}>Your Path Through the Case</h3>
+    <div style={{display:"flex",flexDirection:"column",gap:4}}>
+      {path.map((sid,i)=>{
+        const sc=scenes[sid];if(!sc)return null;
+        const choiceCount=(sc.choices||[]).length;
+        return<div key={i} style={{display:"flex",alignItems:"center",gap:8,fontSize:".75rem",color:C.goldDim}}>
+          <span style={{color:C.gold,flexShrink:0}}>{i+1}.</span>
+          <span style={{fontFamily:"'Alegreya',serif"}}>{sid.replace(/_/g,' ')}</span>
+          {choiceCount>1&&<span style={{fontSize:".6rem",color:C.teal,fontWeight:700}}>⟡ chose</span>}
+        </div>;
+      })}
+    </div>
+  </div>;
+}
 
+/* ═══ AUDIO SYSTEM ═══ */
+let aOk=false,sClick,sReveal,sVictory;
+let ambientSynth=null,ambientGain=null,currentMood=null;
+
+async function initAudio(){
+  if(aOk)return;await Tone.start();
+  sClick=new Tone.Synth({oscillator:{type:"triangle"},envelope:{attack:.01,decay:.1,sustain:0,release:.08},volume:-18}).toDestination();
+  sReveal=new Tone.PolySynth(Tone.Synth,{oscillator:{type:"sine"},envelope:{attack:.04,decay:.3,sustain:.08,release:.4},volume:-16}).toDestination();
+  sVictory=new Tone.PolySynth(Tone.Synth,{oscillator:{type:"triangle"},envelope:{attack:.04,decay:.25,sustain:.15,release:.7},volume:-14}).toDestination();
+  // Ambient system
+  ambientGain=new Tone.Gain(0).toDestination();
+  ambientSynth=new Tone.Synth({oscillator:{type:"sine"},envelope:{attack:3,decay:1,sustain:1,release:3},volume:-30}).connect(ambientGain);
+  aOk=true;
+}
+
+const MOOD_NOTES = {
+  warm:"C2",eerie:"Eb3",dark:null,tense:"A2",forest:"D2",relief:"G2",neutral:"C2"
+};
+
+function setAmbientMood(mood,sOn){
+  if(!aOk||!sOn)return;
+  const note=MOOD_NOTES[mood||"neutral"];
+  if(mood===currentMood)return;
+  currentMood=mood;
+  // Fade out current
+  ambientGain.gain.rampTo(0,1.5);
+  if(!note){currentMood=mood;return;} // "dark" mood = silence
+  // Fade in new
+  setTimeout(()=>{
+    try{
+      ambientSynth.triggerAttack(note);
+      ambientGain.gain.rampTo(0.12,2);
+    }catch(e){}
+  },1600);
+}
+
+/* ═══ SAVE/RESUME ═══ */
+function saveGame(data){try{localStorage.setItem("mt-save-"+data.caseId,JSON.stringify(data));}catch(e){}}
+function loadGame(caseId){try{const v=localStorage.getItem("mt-save-"+caseId);return v?JSON.parse(v):null;}catch(e){return null;}}
+function clearSave(caseId){try{localStorage.removeItem("mt-save-"+caseId);}catch(e){}}
+
+/* ═══ MAIN APP ═══ */
 export default function App(){
   const[scr,setScr]=useState("picker");
   const[caseId,setCaseId]=useState(null);
@@ -67,6 +155,7 @@ export default function App(){
   const[sid,setSid]=useState(null);
   const[hist,setHist]=useState([]);
   const[page,setPage]=useState(0);
+  const[pageFade,setPageFade]=useState(false);
   const[showCh,setShowCh]=useState(false);
   const[tr,setTr]=useState(false);
   const[cAct,setCAct]=useState("");
@@ -79,12 +168,15 @@ export default function App(){
   const[words,setWords]=useState([]);
   const[jrnlB,setJrnlB]=useState(false);
   const[vP,setVP]=useState(null);
+  const[flags,setFlags]=useState({});
+  const[showSummary,setShowSummary]=useState(false);
+  const[savedGame,setSavedGame]=useState(null);
   const cRef=useRef(null);
 
-  const snd=async fn=>{if(!sOn)return;try{await iA();fn();}catch(e){}};
-  const pCl=()=>{if(!aOk)return;sC.triggerAttackRelease("G5","16n");};
-  const pRv=()=>{if(!aOk)return;const t=Tone.now();sR.triggerAttackRelease("E4","8n",t);sR.triggerAttackRelease("G4","8n",t+.08);sR.triggerAttackRelease("B4","8n",t+.16);};
-  const pVi=()=>{if(!aOk)return;const t=Tone.now();["C4","E4","G4","C5","E5"].forEach((n,i)=>sV.triggerAttackRelease(n,"4n",t+i*.12));};
+  const snd=async fn=>{if(!sOn)return;try{await initAudio();fn();}catch(e){}};
+  const pCl=()=>{if(!aOk)return;sClick.triggerAttackRelease("G5","16n");};
+  const pRv=()=>{if(!aOk)return;const t=Tone.now();sReveal.triggerAttackRelease("E4","8n",t);sReveal.triggerAttackRelease("G4","8n",t+.08);sReveal.triggerAttackRelease("B4","8n",t+.16);};
+  const pVi=()=>{if(!aOk)return;const t=Tone.now();["C4","E4","G4","C5","E5"].forEach((n,i)=>sVictory.triggerAttackRelease(n,"4n",t+i*.12));};
 
   const activeCase=caseId?getCaseById(caseId):null;
   const scenes=activeCase?.scenes||{};
@@ -92,31 +184,89 @@ export default function App(){
   const lv=LEVELS[lvl];
   const name=playerName||"Detective";
   const gt=s=>(s?.text||"").replace(/\{C\}/g,"Hemlock").replace(/\{NAME\}/g,name);
-  const pages=sc?paginate(gt(sc)):[];
+
+  const hasIll=sc&&(sc.illustrationImg||sc.illustration);
+  const pages=useMemo(()=>sc?paginate(gt(sc),!!hasIll):[], [sid,lvl,playerName]);
   const totalPages=pages.length;
   const isLastPage=page>=totalPages-1;
   const curPage=pages[page]||"";
 
-  useEffect(()=>{try{const v=localStorage.getItem("mt-prefs");if(v){const s=JSON.parse(v);setLvl(s.l??1);setSOn(s.sOn??true);if(s.name)setPlayerName(s.name);if(s.name)setNameInput(s.name);}}catch(e){}},[]);
+  // Get companion text with flag awareness
+  const getCompanion=()=>{
+    if(!sc)return"";
+    // Check for flag-conditional companion text
+    if(sc.companionIfFlag){
+      for(const[flag,altText]of Object.entries(sc.companionIfFlag)){
+        if(flags[flag])return altText.replace(/\{NAME\}/g,name);
+      }
+    }
+    return(sc.companion||"").replace(/\{NAME\}/g,name);
+  };
+  const compText=getCompanion();
+
+  // Load prefs
+  useEffect(()=>{try{const v=localStorage.getItem("mt-prefs");if(v){const s=JSON.parse(v);setLvl(s.l??1);setSOn(s.sOn??true);if(s.name){setPlayerName(s.name);setNameInput(s.name);}}}catch(e){}},[]);
   const savePrefs=useCallback((patch)=>{try{localStorage.setItem("mt-prefs",JSON.stringify({l:lvl,sOn,name:playerName,...patch}));}catch(e){}},[lvl,sOn,playerName]);
 
+  // Auto-collect journal data on scene entry
   const collectScene=(scene)=>{if(!scene)return;let ch=false;
     const add=(arr,set)=>{arr?.forEach(x=>{set(p=>{if(p.includes(x))return p;ch=true;return[...p,x];});});};
     add(scene.newClues,setClues);add(scene.newPeople,setPeople);add(scene.newPlaces,setPlaces);
     if(ch)setJrnlB(true);};
-  useEffect(()=>{if(sc)collectScene(sc);},[sid]);
 
-  const goTo=n=>{snd(pCl);setTr(true);setBridge(null);setTimeout(()=>{setHist(h=>[...h,sid]);setSid(n);setPage(0);setShowCh(false);setTr(false);if(cRef.current)cRef.current.scrollTop=0;},300);};
+  // On scene change: collect data, set ambient, save game
+  useEffect(()=>{
+    if(!sc||!sid)return;
+    collectScene(sc);
+    if(sOn)snd(()=>setAmbientMood(sc.mood||"neutral",sOn));
+    // Auto-save
+    if(caseId&&sid){
+      saveGame({caseId,sid,hist,clues,people,places,words:words.map(w=>({word:w.word,def:w.def})),playerName,flags,page:0});
+    }
+  },[sid]);
+
+  // Page turn with fade
+  const turnPage=(newPage)=>{
+    setPageFade(true);
+    setTimeout(()=>{
+      setPage(newPage);
+      setPageFade(false);
+      if(cRef.current)cRef.current.scrollTop=0;
+    },200);
+  };
+
+  const goTo=(n,choiceFlags)=>{
+    snd(pCl);setTr(true);setBridge(null);
+    if(choiceFlags)setFlags(f=>({...f,...choiceFlags}));
+    setTimeout(()=>{setHist(h=>[...h,sid]);setSid(n);setPage(0);setShowCh(false);setTr(false);setPageFade(false);if(cRef.current)cRef.current.scrollTop=0;},300);
+  };
   const goBack=()=>{if(!hist.length)return;snd(pCl);setTr(true);setBridge(null);setTimeout(()=>{setSid(hist.at(-1));setHist(h=>h.slice(0,-1));setPage(0);setShowCh(false);setTr(false);},300);};
-  const nextPage=()=>{if(!isLastPage){snd(pCl);setPage(p=>p+1);if(cRef.current)cRef.current.scrollTop=0;}else{setShowCh(true);if(sc.ending)snd(pVi);else snd(pRv);}};
+  const nextPage=()=>{if(!isLastPage){snd(pCl);turnPage(page+1);}else{setShowCh(true);if(sc.ending)snd(pVi);else snd(pRv);}};
   const hvt=w=>{const d=sc?.vocab?.[w]||sc?.vocab?.[w.toLowerCase()]||null;setVP({word:w,def:d});setWords(p=>{if(p.find(x=>x.word.toLowerCase()===w.toLowerCase()))return p;return[...p,{word:w,def:d}];});setJrnlB(true);snd(pCl);};
   const hCA=async()=>{if(!cAct.trim()||!sc)return;setBLoad(true);const r=await aiBridge(gt(sc),cAct.trim(),lvl);setBridge(r||`Hemlock tilts his head. "Interesting. But let's focus on what's in front of us."`);setCAct("");setBLoad(false);};
 
-  const selectCase=(id)=>{const c=getCaseById(id);if(!c||!c.meta.available)return;snd(pCl);setCaseId(id);setScr("setup");};
-  const startCase=()=>{if(!activeCase)return;const n=nameInput.trim()||"Detective";setPlayerName(n);savePrefs({name:n});snd(pRv);setSid(activeCase.meta.startScene);setHist([]);setPage(0);setClues([]);setPeople([]);setPlaces([]);setWords([]);setJrnlB(false);setBridge(null);setShowCh(false);setScr("play");};
-  const backToPicker=()=>{setScr("picker");setCaseId(null);setSid(null);};
+  const selectCase=(id)=>{const c=getCaseById(id);if(!c||!c.meta.available)return;snd(pCl);setCaseId(id);
+    const saved=loadGame(id);setSavedGame(saved);setScr("setup");};
+  const startCase=(resume)=>{
+    if(!activeCase)return;
+    const n=nameInput.trim()||"Detective";setPlayerName(n);savePrefs({name:n});snd(pRv);
+    if(resume&&savedGame){
+      setSid(savedGame.sid);setHist(savedGame.hist||[]);setClues(savedGame.clues||[]);
+      setPeople(savedGame.people||[]);setPlaces(savedGame.places||[]);
+      setWords((savedGame.words||[]).map(w=>({word:w.word,def:w.def})));
+      setFlags(savedGame.flags||{});
+    }else{
+      setSid(activeCase.meta.startScene);setHist([]);setClues([]);setPeople([]);
+      setPlaces([]);setWords([]);setFlags({});clearSave(caseId);
+    }
+    setPage(0);setJrnlB(false);setBridge(null);setShowCh(false);setShowSummary(false);setScr("play");
+  };
+  const backToPicker=()=>{
+    setScr("picker");setCaseId(null);setSid(null);setSavedGame(null);
+    if(aOk&&ambientGain)ambientGain.gain.rampTo(0,1);currentMood=null;
+  };
   const totalJ=clues.length+people.length+places.length+words.length;
-  const compText=sc?.companion?.replace(/\{NAME\}/g,name)||"";
+  const fullPath=useMemo(()=>[...hist,sid].filter(Boolean),[hist,sid]);
 
   /* ═══ PICKER ═══ */
   if(scr==="picker")return(
@@ -130,24 +280,27 @@ export default function App(){
           <p style={{fontFamily:"'Alegreya',serif",color:C.goldDim,fontSize:".9rem",fontStyle:"italic",margin:0}}>Select a case to investigate</p>
         </div>
         <div style={{display:"flex",flexDirection:"column",gap:14,marginBottom:24}}>
-          {CASES.map(c=>{const a=c.meta.available;return(
+          {CASES.map(c=>{const a=c.meta.available;const hasSave=!!loadGame(c.meta.id);return(
             <button key={c.meta.id} onClick={()=>selectCase(c.meta.id)} disabled={!a} style={{background:a?C.paper:C.bgMid,border:`2px solid ${a?C.paperEdge:C.bgLight}`,borderRadius:4,padding:"18px 20px",textAlign:"left",cursor:a?"pointer":"not-allowed",opacity:a?1:.55,boxShadow:a?`0 2px 12px rgba(0,0,0,.3)`:"none",transition:"all .2s",position:"relative",fontFamily:"'Nunito',sans-serif"}}>
               {a&&<><div style={{position:"absolute",top:6,left:6,width:14,height:14,borderTop:`1.5px solid ${C.gold}`,borderLeft:`1.5px solid ${C.gold}`,opacity:.6}}/><div style={{position:"absolute",top:6,right:6,width:14,height:14,borderTop:`1.5px solid ${C.gold}`,borderRight:`1.5px solid ${C.gold}`,opacity:.6}}/><div style={{position:"absolute",bottom:6,left:6,width:14,height:14,borderBottom:`1.5px solid ${C.gold}`,borderLeft:`1.5px solid ${C.gold}`,opacity:.6}}/><div style={{position:"absolute",bottom:6,right:6,width:14,height:14,borderBottom:`1.5px solid ${C.gold}`,borderRight:`1.5px solid ${C.gold}`,opacity:.6}}/></>}
               <div style={{fontSize:".65rem",letterSpacing:3,color:a?C.goldDim:C.textLight,fontWeight:800,textTransform:"uppercase",marginBottom:6}}>Case File No. {c.meta.number}</div>
               <div style={{fontFamily:"'Alegreya',serif",fontSize:"1.25rem",color:a?C.text:C.goldDim,fontWeight:700,lineHeight:1.2,marginBottom:4}}>{c.meta.title}</div>
               <div style={{fontFamily:"'Alegreya',serif",fontSize:".88rem",color:a?C.textMid:C.textLight,fontStyle:"italic"}}>{c.meta.subtitle}</div>
-              {a?<div style={{marginTop:10,fontSize:".7rem",color:C.goldDim,fontWeight:700}}>~{c.meta.estimatedMinutes} min</div>:<div style={{marginTop:10,fontSize:".7rem",color:C.textLight,fontStyle:"italic"}}>Sealed. Check back soon.</div>}
+              <div style={{marginTop:10,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                {a?<span style={{fontSize:".7rem",color:C.goldDim,fontWeight:700}}>~{c.meta.estimatedMinutes} min</span>:<span style={{fontSize:".7rem",color:C.textLight,fontStyle:"italic"}}>Sealed. Check back soon.</span>}
+                {a&&hasSave&&<span style={{fontSize:".65rem",color:C.teal,fontWeight:700}}>⟡ save found</span>}
+              </div>
             </button>);})}
         </div>
         <div style={{display:"flex",gap:8}}>
           <div style={{flex:1}}><div style={{fontSize:".7rem",letterSpacing:3,color:C.goldDim,fontWeight:800,textTransform:"uppercase",marginBottom:8}}>Reading Level</div><div style={{display:"flex",gap:4}}>{LEVELS.map((l,i)=>(<button key={i} onClick={()=>{setLvl(i);snd(pCl);savePrefs({l:i});}} style={{flex:1,padding:"8px",borderRadius:6,border:"none",cursor:"pointer",background:lvl===i?C.gold:C.bgLight,color:lvl===i?C.bg:C.goldDim,fontWeight:800,fontSize:".75rem",transition:"all .2s",fontFamily:"'Nunito',sans-serif"}}>{l.label}</button>))}</div></div>
-          <div><div style={{fontSize:".7rem",letterSpacing:3,color:C.goldDim,fontWeight:800,textTransform:"uppercase",marginBottom:8}}>Sound</div><button onClick={()=>{setSOn(!sOn);savePrefs({sOn:!sOn});}} style={{padding:"8px 16px",borderRadius:6,border:"none",cursor:"pointer",background:sOn?C.teal:C.bgLight,color:sOn?"#fff":C.goldDim,fontWeight:800,fontSize:".75rem",fontFamily:"'Nunito',sans-serif"}}>{sOn?"On":"Off"}</button></div>
+          <div><div style={{fontSize:".7rem",letterSpacing:3,color:C.goldDim,fontWeight:800,textTransform:"uppercase",marginBottom:8}}>Sound</div><button onClick={()=>{const v=!sOn;setSOn(v);savePrefs({sOn:v});if(!v&&ambientGain){ambientGain.gain.rampTo(0,.5);currentMood=null;}}} style={{padding:"8px 16px",borderRadius:6,border:"none",cursor:"pointer",background:sOn?C.teal:C.bgLight,color:sOn?"#fff":C.goldDim,fontWeight:800,fontSize:".75rem",fontFamily:"'Nunito',sans-serif"}}>{sOn?"On":"Off"}</button></div>
         </div>
       </div>
     </div>
   );
 
-  /* ═══ SETUP (name + case cover) ═══ */
+  /* ═══ SETUP ═══ */
   if(scr==="setup"&&activeCase){const m=activeCase.meta;return(
     <div style={{minHeight:"100vh",background:C.bg,fontFamily:"'Nunito',sans-serif",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:20}}>
       <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/><style>{CSS}</style>
@@ -162,23 +315,24 @@ export default function App(){
             <p style={{fontFamily:"'Alegreya',serif",color:C.textMid,fontSize:".95rem",fontStyle:"italic",margin:0}}>{m.subtitle}</p>
           </div>
         </div>
-
-        {/* Name input */}
         <div style={{marginBottom:16,padding:"16px 20px",background:C.bgMid,borderRadius:8,border:`1px solid ${C.bgLight}`}}>
           <div style={{fontSize:".7rem",letterSpacing:3,color:C.goldDim,fontWeight:800,textTransform:"uppercase",marginBottom:10}}>Your Name, Detective</div>
           <input value={nameInput} onChange={e=>setNameInput(e.target.value)} placeholder="Enter your name..." maxLength={20}
             style={{width:"100%",padding:"12px 16px",borderRadius:8,fontSize:"1rem",fontFamily:"'Alegreya',serif",border:`2px solid ${C.bgLight}`,background:C.bg,color:C.goldBright,outline:"none",fontWeight:700,letterSpacing:.5,textAlign:"center"}}/>
-          <p style={{margin:"8px 0 0",fontSize:".72rem",color:C.goldDim,fontStyle:"italic",textAlign:"center",fontFamily:"'Alegreya',serif"}}>Characters in the story will use your name.</p>
         </div>
-
-        {/* Hemlock intro */}
         <div style={{marginBottom:20,padding:"14px 16px",background:C.bgMid,borderRadius:8,border:`1px solid ${C.bgLight}`,overflow:"hidden"}}>
           <img src="/illustrations/hemlock_portrait.jpg" alt="" style={{width:"100%",borderRadius:6,marginBottom:10,opacity:.9}} onError={e=>{e.target.style.display='none'}}/>
           <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:4}}><span style={{fontSize:20}}>🐦‍⬛</span><span style={{fontFamily:"'Alegreya',serif",fontSize:"1rem",color:C.goldBright,fontWeight:700}}>Hemlock</span></div>
           <p style={{margin:0,fontSize:".78rem",color:C.goldDim,fontStyle:"italic",fontFamily:"'Alegreya',serif",lineHeight:1.5}}>Your aunt's raven. Sharp tongue, sharper eyes. Named after something poisonous, which he considers a compliment.</p>
         </div>
-
-        <button onClick={startCase} disabled={!nameInput.trim()} style={{width:"100%",padding:"16px",borderRadius:8,border:`2px solid ${C.gold}`,background:"transparent",cursor:nameInput.trim()?"pointer":"not-allowed",color:nameInput.trim()?C.goldBright:C.goldDim,fontWeight:800,fontSize:"1rem",letterSpacing:2,fontFamily:"'Nunito',sans-serif",transition:"all .2s",textTransform:"uppercase",opacity:nameInput.trim()?1:.4}}>Open the Case</button>
+        <div style={{display:"flex",flexDirection:"column",gap:8}}>
+          <button onClick={()=>startCase(false)} disabled={!nameInput.trim()} style={{width:"100%",padding:"16px",borderRadius:8,border:`2px solid ${C.gold}`,background:"transparent",cursor:nameInput.trim()?"pointer":"not-allowed",color:nameInput.trim()?C.goldBright:C.goldDim,fontWeight:800,fontSize:"1rem",letterSpacing:2,fontFamily:"'Nunito',sans-serif",transition:"all .2s",textTransform:"uppercase",opacity:nameInput.trim()?1:.4}}>
+            {savedGame?"Start Fresh":"Open the Case"}
+          </button>
+          {savedGame&&<button onClick={()=>startCase(true)} style={{width:"100%",padding:"14px",borderRadius:8,border:`1.5px solid ${C.teal}`,background:"transparent",cursor:"pointer",color:C.teal,fontWeight:700,fontSize:".9rem",fontFamily:"'Nunito',sans-serif",transition:"all .2s"}}>
+            Continue Where You Left Off
+          </button>}
+        </div>
       </div>
     </div>
   );}
@@ -195,13 +349,14 @@ export default function App(){
         <button onClick={backToPicker} style={tBtn}>←</button>
         <div style={{display:"flex",alignItems:"center",gap:6}}><span style={{fontSize:14}}>🐦‍⬛</span><span style={{fontSize:".75rem",color:C.goldDim,fontWeight:700}}>Hemlock</span></div>
         <div style={{display:"flex",gap:6}}>
-          <button onClick={()=>{setSOn(!sOn);savePrefs({sOn:!sOn});}} style={tBtn}>{sOn?"♪":"♪̶"}</button>
+          <button onClick={()=>{const v=!sOn;setSOn(v);savePrefs({sOn:v});if(!v&&ambientGain){ambientGain.gain.rampTo(0,.5);currentMood=null;}}} style={tBtn}>{sOn?"♪":"♪̶"}</button>
           <button onClick={()=>{setJrnlO(true);setJrnlB(false);}} style={{...tBtn,position:"relative"}}>📓{totalJ>0&&<span style={{position:"absolute",top:-4,right:-4,minWidth:16,height:16,borderRadius:8,background:jrnlB?C.red:C.gold,fontSize:".55rem",fontWeight:800,color:C.bg,display:"flex",alignItems:"center",justifyContent:"center",padding:"0 3px"}}>{totalJ}</span>}</button>
         </div>
       </div>
 
       <div style={{flex:1,display:"flex",flexDirection:"column",padding:"0 16px 20px",maxWidth:600,width:"100%",margin:"0 auto"}} ref={cRef}>
         <div style={{opacity:tr?0:1,transform:tr?"translateY(10px)":"none",transition:"all .3s ease",flex:1,display:"flex",flexDirection:"column"}}>
+          {/* Journal page */}
           <div style={{flex:1,background:C.paper,borderRadius:4,position:"relative",display:"flex",flexDirection:"column",boxShadow:`0 2px 16px rgba(0,0,0,.3), inset 0 0 40px rgba(139,115,85,.1)`,border:`1px solid ${C.paperEdge}`,overflow:"hidden"}}>
             <div style={{position:"absolute",inset:0,opacity:.03,backgroundImage:`url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,pointerEvents:"none"}}/>
             <div style={{padding:"12px 20px 0",display:"flex",justifyContent:"space-between",alignItems:"center",position:"relative",zIndex:1}}>
@@ -215,7 +370,7 @@ export default function App(){
                   :<div style={{opacity:.85}} dangerouslySetInnerHTML={{__html:sc.illustration}}/>
                 }
               </div>}
-              <div style={{fontFamily:"'Alegreya',serif",fontSize:lv.fs,lineHeight:lv.lh,color:C.text,whiteSpace:"pre-line"}} key={`${sid}-${page}`}>
+              <div style={{fontFamily:"'Alegreya',serif",fontSize:lv.fs,lineHeight:lv.lh,color:C.text,whiteSpace:"pre-line",opacity:pageFade?0:1,transition:"opacity 0.2s ease"}} key={`${sid}-${page}`}>
                 <PText text={curPage} onVT={hvt}/>
               </div>
             </div>
@@ -224,9 +379,10 @@ export default function App(){
             </div>}
           </div>
 
+          {/* Below the journal page */}
           {showCh&&<div style={{marginTop:12}}>
             {compText&&<div style={{display:"flex",gap:10,alignItems:"flex-start",marginBottom:10,animation:"fadeUp .3s ease"}}><span style={{fontSize:20,flexShrink:0,marginTop:2}}>🐦‍⬛</span><p style={{margin:0,fontSize:".85rem",lineHeight:1.6,color:C.goldDim,fontStyle:"italic",fontFamily:"'Alegreya',serif"}}>"{compText}"</p></div>}
-            {sc.question&&<div style={{padding:"10px 14px",marginBottom:10,borderLeft:`3px solid ${C.gold}`,animation:"fadeUp .3s ease"}}><p style={{margin:0,fontSize:".82rem",color:C.goldBright,fontWeight:700,lineHeight:1.5,fontFamily:"'Alegreya',serif",fontStyle:"italic"}}>🤔 {sc.question}</p></div>}
+            {sc.question&&<div style={{padding:"10px 14px",marginBottom:10,borderLeft:`3px solid ${C.gold}`,animation:"fadeUp .3s ease"}}><p style={{margin:0,fontSize:".82rem",color:C.goldBright,fontWeight:700,lineHeight:1.5,fontFamily:"'Alegreya',serif",fontStyle:"italic"}}>🤔 {sc.question.replace(/\{NAME\}/g,name)}</p></div>}
             {bridge&&<div style={{padding:"10px 14px",marginBottom:10,borderLeft:`3px solid ${C.teal}`,animation:"fadeUp .3s ease"}}><p style={{margin:0,fontSize:".85rem",color:C.goldDim,fontStyle:"italic",lineHeight:1.6,fontFamily:"'Alegreya',serif"}}>{bridge}</p></div>}
             {sc.ending?(
               <div style={{animation:"fadeUp .3s ease"}}>
@@ -236,11 +392,19 @@ export default function App(){
                   <p style={{margin:0,color:C.goldDim,fontSize:".88rem",lineHeight:1.6}}>{(sc.endMessage||"").replace(/\{NAME\}/g,name)}</p>
                 </div>
                 {totalJ>0&&<button onClick={()=>setJrnlO(true)} style={{...cBtn,width:"100%",justifyContent:"center",marginBottom:8,borderColor:C.gold,color:C.goldBright}}>📓 Review your journal ({totalJ} entries)</button>}
-                <div style={{display:"flex",gap:8}}><button onClick={startCase} style={{...cBtn,flex:1,justifyContent:"center",background:C.gold,color:C.bg,borderColor:C.gold}}>Play Again</button><button onClick={backToPicker} style={{...cBtn,flex:1,justifyContent:"center"}}>All Cases</button></div>
+                <button onClick={()=>setShowSummary(s=>!s)} style={{...cBtn,width:"100%",justifyContent:"center",marginBottom:8,color:C.goldDim,fontSize:".82rem"}}>{showSummary?"Hide":"Show"} your path through the case</button>
+                {showSummary&&<Summary path={fullPath} scenes={scenes}/>}
+                <div style={{display:"flex",gap:8}}><button onClick={()=>{clearSave(caseId);startCase(false);}} style={{...cBtn,flex:1,justifyContent:"center",background:C.gold,color:C.bg,borderColor:C.gold}}>Play Again</button><button onClick={()=>{clearSave(caseId);backToPicker();}} style={{...cBtn,flex:1,justifyContent:"center"}}>All Cases</button></div>
               </div>
             ):(
               <div style={{display:"flex",flexDirection:"column",gap:8,animation:"fadeUp .3s ease"}}>
-                {(sc.choices||[]).map((c,i)=>(<button key={i} onClick={()=>goTo(c.next)} style={cBtn}><span style={{fontSize:16,flexShrink:0}}>{c.icon}</span><span>{c.text}</span></button>))}
+                {(sc.choices||[]).map((c,i)=>{
+                  const isHigh=c.highStakes;
+                  return<button key={i} onClick={()=>goTo(c.next,c.flags)} style={{...cBtn,...(isHigh?{borderColor:C.gold,boxShadow:`0 0 12px ${C.gold}20`,background:C.bgLight}:{})}}>
+                    <span style={{fontSize:16,flexShrink:0}}>{c.icon}</span>
+                    <span>{c.text}</span>
+                  </button>;
+                })}
                 {hist.length>0&&<button onClick={goBack} style={{...cBtn,opacity:.5,fontSize:".82rem"}}>⬅️ Go back</button>}
                 <div style={{display:"flex",gap:6,marginTop:4}}>
                   <input value={cAct} onChange={e=>setCAct(e.target.value)} onKeyDown={e=>{if(e.key==="Enter")hCA();}} placeholder="Type your own idea..." disabled={bLoad} style={{flex:1,padding:"10px 14px",borderRadius:8,fontSize:".85rem",fontFamily:"'Alegreya',serif",border:`1px solid ${C.bgLight}`,background:C.bgMid,color:C.white,outline:"none",fontStyle:"italic"}}/>

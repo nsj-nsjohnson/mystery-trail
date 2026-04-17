@@ -17,6 +17,7 @@ export const meta = {
 export const scenes = {
 
 start: {
+  mood: "warm",
   text: `Three weeks in, and Hollowmist was starting to feel like yours.
 
 You knew which cobblestones wobbled on Main Street. You knew that Mrs. Puddleford would give you free shortbread if you let her talk for ten minutes, and that the trick was to say "really?" at the right moments. You knew that the third step on Aunt Viola's staircase creaked, and the seventh one didn't, and the eleventh one creaked only on Tuesdays for reasons nobody could explain.
@@ -39,6 +40,7 @@ Viola set down her cup. She looked at you. "Go see what it is, {NAME}. Take Heml
 },
 
 check_journal: {
+  mood: "warm",
   text: `You pulled the Field Journal off its shelf and flipped to the index Viola had taught you. She kept a running list of **anomaly** types in the back, cross-referenced by date. You scanned the entries: bells, feathers, missing animals, temperature drops, mist patterns. Nothing about mysterious packages.
 
 But something caught your eye. An entry from 1963, the year after Thornwick disappeared. In Helena's handwriting: **"Received a letter. No return address. Contained a pressed flower from a garden that no longer exists. Showed it to the Wardens. Silvia said: 'Someone remembers.' Destroyed the flower. Regret this."**
@@ -59,6 +61,8 @@ He was not being dry. He was not being sarcastic. This was Hemlock being careful
 },
 
 post_office: {
+  question: "She said 'For the Keeper' and left crying. If she wanted to destroy the town, would she warn the one person who could stop her?",
+  mood: "warm",
   illustration: `<svg viewBox="0 0 280 170" xmlns="http://www.w3.org/2000/svg" style="max-width:250px">
   <g fill="none" stroke="#2C1810" stroke-width="1" stroke-linecap="round">
     <!-- paper edges -->
@@ -117,6 +121,7 @@ Hemlock landed on the counter. He looked at the map. He did not speak. You had n
 },
 
 pips_details: {
+  mood: "warm",
   text: `"Tell me everything," you said. "Everything you noticed."
 
 Pips took a breath. For once, the nervous energy focused into something useful. "Old. Very old. Eighties, maybe ninety. Small. She walked with a cane but she didn't lean on it, she gripped it. Her coat was brown. Good quality but old, the kind of old where the fabric has gone soft from being worn for decades. Her shoes were polished. That stuck with me. Very **deliberately** polished, like she had a reason to look presentable today."
@@ -141,6 +146,7 @@ He looked at the map. "She has been remembering for sixty-two years. And now she
 },
 
 find_edith_early: {
+  mood: "forest",
   text: `"Where does she live?" you asked Pips.
 
 "I don't know! She doesn't receive mail! She doesn't EXIST in my records!" Pips was back to vibrating. "But there's an old cottage at the end of Lantern Road that has had its chimney smoking for the past few weeks. Nobody has lived there in years. I deliver to every house on that road and I have never delivered to that one, and now someone is burning firewood in it, and I have been DELIBERATELY not thinking about it because thinking about it makes my whiskers hurt."
@@ -161,6 +167,7 @@ Whatever Edith Thorne wanted, she wanted it badly enough to walk into a post off
 },
 
 viola_reacts: {
+  mood: "warm",
   text: `You spread the map on Viola's kitchen table. She put on her glasses. She leaned in. She was quiet for a very long time.
 
 Then she sat down heavily, which was something Viola never did. Viola stood. Viola paced. Viola did not sit down like the chair was the only thing keeping her upright.
@@ -184,6 +191,7 @@ She looked at the note. **I remember.** "I have been waiting for this," she said
 },
 
 what_wants: {
+  mood: "tense",
   text: `"What does she want?" you asked.
 
 Viola stared at the map. "What would you want, {NAME}, if your whole world was taken from you when you were seven years old, and everyone told you to forget it, and you could NOT forget it, and you spent sixty years carrying a town inside your head that nobody else even believed existed?"
@@ -206,9 +214,14 @@ Viola stood up. "We need to find her before she does anything. {NAME}, she left 
 },
 
 edith_cottage: {
-  text: `The cottage at the end of Lantern Road was small and old and looked like it had been holding its breath for decades. The garden was overgrown. The paint was peeling. But the chimney was smoking, and through the window, you could see the warm yellow light of a lamp.
+  mood: "eerie",
+  text: `The cottage at the end of Lantern Road was small and old and looked like it had been holding its breath for decades. The garden had given up on being a garden and was now just a collection of things growing where they pleased. The fence leaned. The paint on the front door had peeled so far back it looked like the wood underneath was trying to shed its own skin.
 
-Hemlock landed on the gate and looked at you. This was the moment he would normally say something dry. He didn't. That told you more than any words.`,
+But the chimney was smoking. Fresh smoke, warm and steady, the kind that comes from a fire that someone is sitting beside. And through the window, you could see the yellow glow of a lamp, the kind of glow that turns a cold room into a place where a person is choosing to stay.
+
+Hemlock landed on the gate. He looked at the cottage. He looked at you. This was the moment when he would normally say something dry and pointed, a comment about the garden or the structural integrity of the fence or the questionable life choices of people who live at the ends of roads. He didn't. He said nothing.
+
+That told you more than any of his best sentences ever had.`,
   companion: `Be kind. Whatever she is, she has been carrying this for longer than you have been alive.`,
   newPlaces: ["Edith's cottage: end of Lantern Road, small, old, lamp burning"],
   choices: [
@@ -218,6 +231,7 @@ Hemlock landed on the gate and looked at you. This was the moment he would norma
 },
 
 peek_window: {
+  mood: "eerie",
   illustrationImg: "/illustrations/c2_wall.jpg",
   
   text: `You crept around the side of the cottage and looked through the window.
@@ -240,6 +254,7 @@ She spoke without looking toward the window. "You might as well come in, child. 
 },
 
 meet_edith: {
+  mood: "warm",
   text: `The door was unlocked.
 
 Edith Thorne was smaller than you expected. She sat in an old armchair near the fire, wrapped in a brown cardigan that had been washed so many times it looked like it was made of clouds. Her hair was white. Her eyes were very pale blue, almost the color of the mist itself. She looked at you, and her face did something complicated: surprise, then recognition, then a sadness so deep it had gone quiet.
@@ -264,6 +279,7 @@ She set down the tea. "I am going to bring Thornwick back, {NAME}. I know how. T
 },
 
 why_waited: {
+  mood: "warm",
   text: `"Why now?" you asked. "After sixty-two years. Why now?"
 
 Edith looked at the fire. "Because I am running out of time," she said simply. "I am eighty-nine years old. My hands shake. My eyes are not what they were. I can still draw the map, but I can feel the details starting to blur at the edges. My brother's face. I used to see it perfectly. Now I have to look at the photograph to remember exactly." She gestured at the wall. "Every year, a little more fades. And when I am gone, no one will remember Thornwick at all. Not a single person on this earth will know that my mother had a garden with **hollyhocks** by the fence, or that my brother could whistle any song after hearing it once, or that our dog was named Captain and he was afraid of butterflies."
@@ -280,6 +296,8 @@ Hemlock, from the windowsill, was very still. You had never heard him be this qu
 },
 
 edith_plan: {
+  question: "Edith says 90 seconds is enough. Agnes says 90 seconds is actually 6 hours. Who do you believe, and why?",
+  mood: "tense",
   text: `Edith stood up slowly and crossed the room to a desk covered in papers. She pulled out a diagram. It was hand-drawn, precise, and labeled in the same careful handwriting as the map.
 
 "The bell," she said. "The Hollowmist bell is not just a counter. It is a **mechanism**. Twelve rings seal the thin place shut for the night. Thirteen opens it, as your friend Blackthorn demonstrated. But there is a fourteenth ring, one that Helena's journal mentions only once. Fourteen is a **reversal**. It pulls back what was taken. The town. The people. Everything."
@@ -303,6 +321,8 @@ Hemlock spoke from the window. His voice was flat. "You are asking a child to **
 },
 
 meet_crow: {
+  question: "Agnes is cranky and rude, but she's also the oldest creature in town. How do you weigh what someone says against how they say it?",
+  mood: "warm",
   illustrationImg: "/illustrations/c2_agnes.jpg",
   
   text: `The old schoolhouse was at the north end of town, boarded up and covered in ivy. The crow lived in the chimney. She had lived there for, as she put it, "longer than the school was a school and I will be here after the bricks forget what a school is."
@@ -328,6 +348,7 @@ She ruffled her feathers **indignantly**. "Also, I was not consulted. I am a WAR
 },
 
 agnes_idea: {
+  mood: "warm",
   text: `"Is there another way?" you asked. "A way to save what Edith remembers without opening the seal?"
 
 Agnes cocked her head. Both eyes now. She was looking at you the way Hemlock sometimes did: **reassessing**.
@@ -348,6 +369,8 @@ She looked down at you. "Whether that is enough for Edith Thorne is not a questi
 },
 
 tell_viola: {
+  question: "Viola says a written record isn't a mother. Edith wants her family back. Is there a middle ground, or are these two things that can't meet?",
+  mood: "warm",
   text: `You laid it all out on the kitchen table. The map. Edith's plan. The fourteenth ring. The ninety seconds that were actually six hours. Agnes's idea about the journal. Everything.
 
 Viola listened the way she always did: completely still, eyes on you, not interrupting. When you finished, she stood up and walked to the window and looked out at the garden for a long time.
@@ -372,6 +395,8 @@ She looked at you. "I think you need to go back to Edith. And I think you need t
 },
 
 return_edith: {
+  question: "You're about to try to change the mind of someone who has spent 62 years deciding. What matters more: what you say, or how you say it?",
+  mood: "tense",
   text: `The walk to Lantern Road was longer the second time. Not because the distance had changed. Because you were carrying something heavy, and it wasn't the iron nail in your pocket.
 
 The cottage was the same. Lamp burning. Chimney smoking. But the door was open this time, and Edith was standing in the garden, looking up at the sky. She turned when she heard your footsteps.
@@ -394,13 +419,14 @@ You had to give her one.`,
   vocab: { work:"Function successfully, accomplish what it's designed to do", pretending:"Acting as if something is true when it isn't" },
   companion: null,
   choices: [
-    { text: "Tell her the truth about the cost", icon: "💭", next: "appeal_logic" },
-    { text: "Tell her what her family would want", icon: "❤️", next: "appeal_heart" },
-    { text: "Offer her the journal", icon: "📓", next: "offer_journal" },
+    { text: "Tell her the truth about the cost", icon: "💭", next: "appeal_logic", highStakes: true },
+    { text: "Tell her what her family would want", icon: "❤️", next: "appeal_heart", highStakes: true },
+    { text: "Offer her the journal", icon: "📓", next: "offer_journal", highStakes: true },
   ],
 },
 
 appeal_logic: {
+  mood: "tense",
   text: `"It wouldn't be Thornwick," you said.
 
 Edith's expression shifted. Not anger. Attention.
@@ -424,6 +450,7 @@ The silence that followed was the kind of silence that happens when someone's wo
 },
 
 appeal_heart: {
+  mood: "tense",
   text: `"What would your mother think?" you said.
 
 Edith went very still.
@@ -449,6 +476,7 @@ After a long time, she lowered her hands. Her face was wet and her eyes were red
 },
 
 offer_journal: {
+  mood: "relief",
   text: `"I have an idea," you said. "The crow told me about it, and I think it might be what you actually need."
 
 Edith watched you. Waiting.
@@ -476,6 +504,7 @@ Edith Thorne closed her eyes. Two tears ran down her face. She did not wipe them
 },
 
 offer_after: {
+  mood: "relief",
   text: `"There's something else," you said. "Something the crow told me about. The Field Journal."
 
 Edith looked up. Her eyes were red but she was listening.
@@ -499,6 +528,7 @@ She closed her eyes. "I have been so tired," she whispered. "I have been so tire
 },
 
 ending: {
+  mood: "relief",
   illustrationImg: "/illustrations/c2_edith_writing.jpg",
   
   text: `You walked Edith Thorne down Lantern Road and through the streets of Hollowmist as the sun set. She walked slowly. She held your arm. Her hands were still shaking, but her grip was steady.
