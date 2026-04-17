@@ -129,6 +129,34 @@ Viola was quiet for a long time. "She stopped him. The last time he came. She su
 },
 
 sneak_out: {
+  illustration: `<svg viewBox="0 0 280 180" xmlns="http://www.w3.org/2000/svg" style="max-width:260px">
+  <g fill="none" stroke="#2C1810" stroke-width="1.5" stroke-linecap="round">
+    <!-- tower body -->
+    <path d="M125 170 L125 55 L140 25 L155 55 L155 170" stroke-width="2"/>
+    <!-- tower details -->
+    <line x1="125" y1="80" x2="155" y2="80"/>
+    <line x1="125" y1="110" x2="155" y2="110"/>
+    <!-- bell window -->
+    <path d="M130 60 Q140 50 150 60 L150 75 L130 75 Z"/>
+    <!-- bell inside -->
+    <path d="M135 63 Q140 58 145 63 L145 72 L135 72" stroke="#5C4033" stroke-width="1"/>
+    <!-- mist at base -->
+    <path d="M60 170 Q90 160 120 168 Q140 172 160 165 Q180 160 210 170" stroke="#8B7355" stroke-width="1" opacity=".5"/>
+    <path d="M50 175 Q80 168 110 174 Q135 178 165 172 Q190 167 220 175" stroke="#8B7355" stroke-width="1" opacity=".3"/>
+    <!-- stars -->
+    <circle cx="80" cy="35" r="1" fill="#5C4033"/>
+    <circle cx="200" cy="25" r="1" fill="#5C4033"/>
+    <circle cx="180" cy="50" r="1.2" fill="#5C4033"/>
+    <circle cx="100" cy="20" r=".8" fill="#5C4033"/>
+    <circle cx="220" cy="40" r=".8" fill="#5C4033"/>
+    <!-- trees -->
+    <path d="M60 170 L70 130 L80 170" stroke="#5C4033" stroke-width="1"/>
+    <path d="M200 170 L210 125 L220 170" stroke="#5C4033" stroke-width="1"/>
+    <!-- annotation -->
+    <text x="175" y="95" font-family="'Alegreya',serif" font-size="9" fill="#8B7355" font-style="italic">the oldest thing</text>
+    <text x="175" y="106" font-family="'Alegreya',serif" font-size="9" fill="#8B7355" font-style="italic">in Hollowmist</text>
+  </g>
+</svg>`,
   text: `The evening air was cool and wet and smelled like pine needles and pennies. Corvid flew ahead, a black shape against the darkening sky.
 
 The mist was coming in. Not normal fog. This mist moved in slow, deliberate **tendrils**, curling around lampposts and pooling in doorways like something testing the edges of where it was allowed to go. A streetlight flickered. Steadied. Flickered again. Went out.
@@ -148,6 +176,34 @@ Inside: a spiral staircase winding up into the dark. The walls were covered in t
 },
 
 tower_alone: {
+  illustration: `<svg viewBox="0 0 280 150" xmlns="http://www.w3.org/2000/svg" style="max-width:240px">
+  <g fill="none" stroke="#2C1810" stroke-width="1.5" stroke-linecap="round">
+    <!-- feather -->
+    <path d="M140 20 Q138 50 135 80 Q132 110 130 130" stroke-width="2"/>
+    <path d="M140 20 Q145 40 142 60 Q139 80 135 95" stroke-width="1.5"/>
+    <path d="M140 20 Q135 40 133 60 Q130 80 130 95" stroke-width="1.5"/>
+    <!-- barbs left -->
+    <path d="M133 40 Q120 38 115 42" stroke-width="1"/>
+    <path d="M132 55 Q118 52 112 57" stroke-width="1"/>
+    <path d="M131 70 Q116 66 110 72" stroke-width="1"/>
+    <path d="M130 85 Q115 82 108 87" stroke-width="1"/>
+    <!-- barbs right -->
+    <path d="M142 40 Q155 37 160 42" stroke-width="1"/>
+    <path d="M141 55 Q154 52 160 56" stroke-width="1"/>
+    <path d="M139 70 Q153 66 158 71" stroke-width="1"/>
+    <path d="M137 85 Q150 82 156 86" stroke-width="1"/>
+    <!-- cold radiating lines -->
+    <line x1="100" y1="30" x2="88" y2="25" stroke="#8B7355" stroke-width=".8" opacity=".5"/>
+    <line x1="95" y1="55" x2="80" y2="52" stroke="#8B7355" stroke-width=".8" opacity=".4"/>
+    <line x1="170" y1="35" x2="185" y2="30" stroke="#8B7355" stroke-width=".8" opacity=".5"/>
+    <line x1="172" y1="60" x2="188" y2="58" stroke="#8B7355" stroke-width=".8" opacity=".4"/>
+    <line x1="93" y1="78" x2="78" y2="80" stroke="#8B7355" stroke-width=".8" opacity=".3"/>
+    <line x1="170" y1="80" x2="185" y2="82" stroke="#8B7355" stroke-width=".8" opacity=".3"/>
+    <!-- annotation -->
+    <text x="185" y="110" font-family="'Alegreya',serif" font-size="9" fill="#D4A847" font-style="italic">DO NOT TOUCH</text>
+    <text x="200" y="122" font-family="'Alegreya',serif" font-size="8" fill="#8B7355" font-style="italic">— V.A.</text>
+  </g>
+</svg>`,
   text: `At the top: the bell chamber. A single iron bell the size of a dinner table hung from thick chains. Beside it, on a wooden stand, a ledger lay open. Rows of pencil entries, one per night. 12. 12. 12. 12. For years. Then last night. "13." Written in something rust-colored and thin. Not pencil. Not ink.
 
 "That is blood," Corvid said, landing beside it. "Left on purpose. That is a **signature**, not an accident."
@@ -208,6 +264,37 @@ Corvid's head snapped toward the stairwell. "Someone's coming," he hissed. "And 
 },
 
 blackthorn_knows: {
+  illustration: `<svg viewBox="0 0 280 180" xmlns="http://www.w3.org/2000/svg" style="max-width:240px">
+  <g fill="none" stroke="#2C1810" stroke-width="1.5" stroke-linecap="round">
+    <!-- figure outline - tall, wrong proportions -->
+    <path d="M140 20 Q140 15 140 20" stroke-width="2"/>
+    <!-- head -->
+    <ellipse cx="140" cy="28" rx="10" ry="13" stroke-width="1.5"/>
+    <!-- eyes -->
+    <ellipse cx="136" cy="26" rx="2.5" ry="1.5" fill="#8B7355" opacity=".6"/>
+    <ellipse cx="144" cy="26" rx="2.5" ry="1.5" fill="#8B7355" opacity=".6"/>
+    <!-- body - too thin -->
+    <path d="M132 41 L128 100 L125 170" stroke-width="1.5"/>
+    <path d="M148 41 L152 100 L155 170" stroke-width="1.5"/>
+    <!-- coat -->
+    <path d="M128 100 Q115 120 105 170" stroke-width="1"/>
+    <path d="M152 100 Q165 120 175 170" stroke-width="1"/>
+    <!-- arms - too long -->
+    <path d="M130 55 Q115 70 100 95 Q90 110 85 130" stroke-width="1.2"/>
+    <path d="M150 55 Q165 70 180 95 Q190 110 195 130" stroke-width="1.2"/>
+    <!-- fingers - too many joints -->
+    <path d="M85 130 L80 138 M85 130 L83 139 M85 130 L87 138 M85 130 L90 136" stroke-width=".8"/>
+    <path d="M195 130 L190 138 M195 130 L193 139 M195 130 L197 138 M195 130 L200 136" stroke-width=".8"/>
+    <!-- annotation -->
+    <text x="30" y="40" font-family="'Alegreya',serif" font-size="9" fill="#8B7355" font-style="italic">arms wrong</text>
+    <text x="30" y="51" font-family="'Alegreya',serif" font-size="9" fill="#8B7355" font-style="italic">too many joints</text>
+    <text x="195" y="40" font-family="'Alegreya',serif" font-size="9" fill="#8B7355" font-style="italic">eyes like</text>
+    <text x="195" y="51" font-family="'Alegreya',serif" font-size="9" fill="#8B7355" font-style="italic">smoke</text>
+    <!-- question marks around head -->
+    <text x="115" y="18" font-family="'Alegreya',serif" font-size="10" fill="#8B7355" opacity=".4">?</text>
+    <text x="160" y="22" font-family="'Alegreya',serif" font-size="8" fill="#8B7355" opacity=".3">?</text>
+  </g>
+</svg>`,
   text: `Too late for either. The footsteps reached the top and a man stepped into the chamber.
 
 He was tall. Very tall. He wore a plain black coat that seemed to have more darkness in it than fabric should hold. His features were sharp, his eyes the color of smoke. He looked at you the way someone looks at an interesting insect on their lunch.
@@ -359,6 +446,36 @@ She pulled a key from around her neck and walked toward the back of the house, p
 },
 
 basement: {
+  illustration: `<svg viewBox="0 0 280 170" xmlns="http://www.w3.org/2000/svg" style="max-width:250px">
+  <g fill="none" stroke="#2C1810" stroke-width="1.5" stroke-linecap="round">
+    <!-- outer circle -->
+    <circle cx="140" cy="85" r="65" stroke-width="2"/>
+    <!-- inner circle -->
+    <circle cx="140" cy="85" r="45" stroke-width="1" stroke="#5C4033"/>
+    <!-- symbols around the circle -->
+    <text x="140" y="30" font-family="serif" font-size="11" fill="#2C1810" text-anchor="middle">◊</text>
+    <text x="200" y="60" font-family="serif" font-size="11" fill="#2C1810" text-anchor="middle">△</text>
+    <text x="210" y="100" font-family="serif" font-size="11" fill="#2C1810" text-anchor="middle">☽</text>
+    <text x="190" y="135" font-family="serif" font-size="11" fill="#2C1810" text-anchor="middle">⟡</text>
+    <text x="140" y="155" font-family="serif" font-size="11" fill="#2C1810" text-anchor="middle">◈</text>
+    <text x="90" y="135" font-family="serif" font-size="11" fill="#2C1810" text-anchor="middle">⊕</text>
+    <text x="70" y="100" font-family="serif" font-size="11" fill="#2C1810" text-anchor="middle">⟐</text>
+    <text x="80" y="60" font-family="serif" font-size="11" fill="#2C1810" text-anchor="middle">⊘</text>
+    <!-- three warden marks equally spaced -->
+    <circle cx="140" cy="20" r="4" stroke="#D4A847" stroke-width="1.5"/>
+    <circle cx="197" cy="118" r="4" stroke="#D4A847" stroke-width="1.5"/>
+    <circle cx="83" cy="118" r="4" stroke="#D4A847" stroke-width="1.5"/>
+    <!-- labels -->
+    <text x="140" y="10" font-family="'Alegreya',serif" font-size="7" fill="#D4A847" text-anchor="middle" font-style="italic">cat</text>
+    <text x="212" y="125" font-family="'Alegreya',serif" font-size="7" fill="#D4A847" font-style="italic">owl</text>
+    <text x="58" y="125" font-family="'Alegreya',serif" font-size="7" fill="#D4A847" font-style="italic">crow</text>
+    <!-- shimmer lines in center -->
+    <line x1="130" y1="75" x2="132" y2="80" stroke="#8B7355" stroke-width=".6" opacity=".4"/>
+    <line x1="145" y1="78" x2="147" y2="83" stroke="#8B7355" stroke-width=".6" opacity=".4"/>
+    <line x1="138" y1="82" x2="140" y2="88" stroke="#8B7355" stroke-width=".6" opacity=".3"/>
+    <line x1="150" y1="86" x2="148" y2="92" stroke="#8B7355" stroke-width=".6" opacity=".3"/>
+  </g>
+</svg>`,
   text: `The stairs went down into stone.
 
 The room was not a basement. It was a **chamber**, round-walled, carved from bedrock. And on the floor, in the exact center, drawn in silver that caught the lamplight: a circle of symbols. Inside the circle, the air shimmered. You could see it. A faint ripple, like heat off pavement, except it was cold. Your breath came out white.
@@ -403,6 +520,35 @@ At the door, she put one hand on your shoulder. "Be clever, {NAME}. He's been do
 },
 
 find_workshop: {
+  illustration: `<svg viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" style="max-width:220px">
+  <g fill="none" stroke="#2C1810" stroke-width="1.5" stroke-linecap="round">
+    <!-- workbench surface -->
+    <line x1="40" y1="130" x2="240" y2="130" stroke-width="2"/>
+    <!-- bottle -->
+    <path d="M130 50 L130 40 Q130 30 135 30 L145 30 Q150 30 150 40 L150 50" stroke-width="1.5"/>
+    <path d="M125 50 Q120 55 118 70 Q115 90 118 110 Q120 125 130 128 L150 128 Q160 125 162 110 Q165 90 162 70 Q160 55 155 50" stroke-width="1.5"/>
+    <!-- cork -->
+    <rect x="133" y="26" width="14" height="8" rx="2" stroke-width="1"/>
+    <!-- glow inside -->
+    <circle cx="140" cy="90" r="12" stroke="#D4A847" stroke-width="1" opacity=".6"/>
+    <circle cx="140" cy="90" r="6" fill="#D4A847" opacity=".2"/>
+    <circle cx="140" cy="90" r="3" fill="#D4A847" opacity=".3"/>
+    <!-- glow rays -->
+    <line x1="140" y1="72" x2="140" y2="68" stroke="#D4A847" stroke-width=".7" opacity=".4"/>
+    <line x1="140" y1="108" x2="140" y2="112" stroke="#D4A847" stroke-width=".7" opacity=".4"/>
+    <line x1="124" y1="90" x2="120" y2="90" stroke="#D4A847" stroke-width=".7" opacity=".4"/>
+    <line x1="156" y1="90" x2="160" y2="90" stroke="#D4A847" stroke-width=".7" opacity=".4"/>
+    <!-- tools beside it -->
+    <line x1="70" y1="128" x2="80" y2="90" stroke="#5C4033" stroke-width="1"/>
+    <line x1="85" y1="128" x2="90" y2="95" stroke="#5C4033" stroke-width="1"/>
+    <circle cx="95" cy="120" r="6" stroke="#5C4033" stroke-width="1"/>
+    <!-- annotation -->
+    <text x="170" y="80" font-family="'Alegreya',serif" font-size="8" fill="#D4A847" font-style="italic">Marmalade</text>
+    <text x="170" y="91" font-family="'Alegreya',serif" font-size="8" fill="#D4A847" font-style="italic">is in here</text>
+    <!-- arrow -->
+    <path d="M168 85 L158 88" stroke="#D4A847" stroke-width=".7" marker-end="none"/>
+  </g>
+</svg>`,
   text: `Corvid found it. Of course he did.
 
 "Old root cellar," he reported. "Behind the abandoned dairy on Cutter's Lane. Chimney producing smoke that shouldn't be there. Door opened recently."
@@ -489,6 +635,31 @@ The stars came out. The mist came up. The waiting began.`,
 },
 
 clearing: {
+  illustration: `<svg viewBox="0 0 280 150" xmlns="http://www.w3.org/2000/svg" style="max-width:250px">
+  <g fill="none" stroke="#2C1810" stroke-width="1.5" stroke-linecap="round">
+    <!-- flat stone -->
+    <ellipse cx="170" cy="125" rx="50" ry="12" stroke-width="1.5"/>
+    <!-- bottle on stone -->
+    <path d="M165 90 Q160 95 158 105 Q156 115 160 122 L180 122 Q184 115 182 105 Q180 95 175 90" stroke-width="1.2"/>
+    <circle cx="170" cy="108" r="5" stroke="#D4A847" stroke-width="1" opacity=".5"/>
+    <!-- nail in flight -->
+    <line x1="50" y1="60" x2="140" y2="95" stroke="#2C1810" stroke-width="2.5"/>
+    <!-- motion lines -->
+    <line x1="45" y1="58" x2="30" y2="52" stroke="#8B7355" stroke-width=".8" opacity=".4"/>
+    <line x1="48" y1="64" x2="33" y2="60" stroke="#8B7355" stroke-width=".8" opacity=".3"/>
+    <line x1="52" y1="68" x2="38" y2="66" stroke="#8B7355" stroke-width=".8" opacity=".3"/>
+    <!-- stars -->
+    <circle cx="60" cy="20" r="1" fill="#5C4033"/>
+    <circle cx="120" cy="15" r="1.2" fill="#5C4033"/>
+    <circle cx="200" cy="22" r="1" fill="#5C4033"/>
+    <circle cx="240" cy="35" r=".8" fill="#5C4033"/>
+    <circle cx="90" cy="30" r=".8" fill="#5C4033"/>
+    <!-- mist -->
+    <path d="M30 140 Q80 132 130 138 Q170 142 220 135 Q240 133 260 140" stroke="#8B7355" stroke-width="1" opacity=".3"/>
+    <!-- annotation -->
+    <text x="30" y="45" font-family="'Alegreya',serif" font-size="9" fill="#D4A847" font-style="italic">HAWTHORN</text>
+  </g>
+</svg>`,
   text: `Eleven minutes to midnight. The air changed.
 
 Blackthorn did not walk into the clearing. He was simply not there, and then he was. Tall and dark, holding the glass bottle against his chest. The orange light pulsed inside it. Marmalade.

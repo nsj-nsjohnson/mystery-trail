@@ -59,6 +59,38 @@ He was not being dry. He was not being sarcastic. This was Corvid being careful 
 },
 
 post_office: {
+  illustration: `<svg viewBox="0 0 280 170" xmlns="http://www.w3.org/2000/svg" style="max-width:250px">
+  <g fill="none" stroke="#2C1810" stroke-width="1" stroke-linecap="round">
+    <!-- paper edges -->
+    <rect x="50" y="15" width="180" height="140" rx="1" stroke-width="1.5"/>
+    <!-- fold lines -->
+    <line x1="140" y1="15" x2="140" y2="155" stroke="#8B7355" stroke-width=".5" stroke-dasharray="4 3" opacity=".4"/>
+    <line x1="50" y1="85" x2="230" y2="85" stroke="#8B7355" stroke-width=".5" stroke-dasharray="4 3" opacity=".4"/>
+    <!-- streets -->
+    <line x1="70" y1="50" x2="210" y2="50" stroke="#5C4033" stroke-width=".8"/>
+    <line x1="70" y1="70" x2="210" y2="70" stroke="#5C4033" stroke-width=".8"/>
+    <line x1="70" y1="100" x2="210" y2="100" stroke="#5C4033" stroke-width=".8"/>
+    <line x1="90" y1="35" x2="90" y2="130" stroke="#5C4033" stroke-width=".8"/>
+    <line x1="130" y1="35" x2="130" y2="130" stroke="#5C4033" stroke-width=".8"/>
+    <line x1="170" y1="35" x2="170" y2="130" stroke="#5C4033" stroke-width=".8"/>
+    <!-- tiny buildings -->
+    <rect x="95" y="53" width="12" height="8" stroke="#8B7355" stroke-width=".6"/>
+    <rect x="135" y="53" width="10" height="8" stroke="#8B7355" stroke-width=".6"/>
+    <rect x="95" y="73" width="15" height="10" stroke="#8B7355" stroke-width=".6"/>
+    <rect x="175" y="53" width="12" height="8" stroke="#8B7355" stroke-width=".6"/>
+    <rect x="135" y="103" width="14" height="10" stroke="#8B7355" stroke-width=".6"/>
+    <!-- church with crooked steeple -->
+    <rect x="175" y="73" width="14" height="12" stroke="#2C1810" stroke-width=".8"/>
+    <line x1="182" y1="73" x2="184" y2="63" stroke="#2C1810" stroke-width=".8"/>
+    <!-- fountain in park -->
+    <circle cx="110" cy="115" r="6" stroke="#5C4033" stroke-width=".6"/>
+    <circle cx="110" cy="115" r="2" fill="#5C4033" opacity=".3"/>
+    <!-- title -->
+    <text x="140" y="30" font-family="'Alegreya',serif" font-size="9" fill="#2C1810" text-anchor="middle" font-weight="700" font-style="italic">THORNWICK</text>
+    <!-- note -->
+    <text x="140" y="148" font-family="'Alegreya',serif" font-size="7" fill="#8B7355" text-anchor="middle" font-style="italic">As I remember it</text>
+  </g>
+</svg>`,
   text: `Mr. Pips was standing behind the counter in a state of **advanced** agitation, which for Pips meant his whiskers were vibrating at a frequency that could probably pick up radio signals.
 
 "Oh thank GOODNESS," he said when you walked in. "Viola's niece. Good. Excellent. Take it. Please take it. It has been sitting on my counter since five-thirty this morning and it is making me DEEPLY **uncomfortable**."
@@ -186,6 +218,33 @@ Corvid landed on the gate and looked at you. This was the moment he would normal
 },
 
 peek_window: {
+  illustration: `<svg viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" style="max-width:240px">
+  <g fill="none" stroke="#2C1810" stroke-width="1" stroke-linecap="round">
+    <!-- window frame -->
+    <rect x="40" y="10" width="200" height="140" rx="2" stroke-width="2"/>
+    <line x1="140" y1="10" x2="140" y2="150" stroke-width="1.5"/>
+    <line x1="40" y1="80" x2="240" y2="80" stroke-width="1.5"/>
+    <!-- maps on wall (through window) -->
+    <rect x="55" y="22" width="25" height="18" stroke="#5C4033" stroke-width=".7" transform="rotate(-3 67 31)"/>
+    <rect x="90" y="18" width="20" height="22" stroke="#5C4033" stroke-width=".7" transform="rotate(2 100 29)"/>
+    <rect x="150" y="20" width="28" height="20" stroke="#5C4033" stroke-width=".7" transform="rotate(-1 164 30)"/>
+    <rect x="195" y="22" width="22" height="16" stroke="#5C4033" stroke-width=".7" transform="rotate(3 206 30)"/>
+    <!-- photos -->
+    <rect x="60" y="52" width="14" height="18" stroke="#8B7355" stroke-width=".6"/>
+    <rect x="80" y="50" width="16" height="14" stroke="#8B7355" stroke-width=".6"/>
+    <rect x="160" y="48" width="14" height="18" stroke="#8B7355" stroke-width=".6"/>
+    <rect x="190" y="52" width="18" height="14" stroke="#8B7355" stroke-width=".6"/>
+    <!-- more maps below -->
+    <rect x="55" y="90" width="30" height="22" stroke="#5C4033" stroke-width=".7" transform="rotate(1 70 101)"/>
+    <rect x="100" y="88" width="26" height="24" stroke="#5C4033" stroke-width=".7"/>
+    <rect x="150" y="90" width="22" height="20" stroke="#5C4033" stroke-width=".7" transform="rotate(-2 161 100)"/>
+    <rect x="185" y="92" width="28" height="18" stroke="#5C4033" stroke-width=".7"/>
+    <!-- lamp glow -->
+    <circle cx="140" cy="80" r="20" fill="#D4A847" opacity=".06"/>
+    <!-- annotation -->
+    <text x="140" y="150" font-family="'Alegreya',serif" font-size="8" fill="#8B7355" text-anchor="middle" font-style="italic">sixty-two years of remembering</text>
+  </g>
+</svg>`,
   text: `You crept around the side of the cottage and looked through the window.
 
 The room inside was small and warm. A fire in the grate. An old armchair. A cup of tea on a side table, still steaming. And every wall, every **surface**, was covered in drawings.
@@ -269,6 +328,40 @@ Corvid spoke from the window. His voice was flat. "You are asking a child to **o
 },
 
 meet_crow: {
+  illustration: `<svg viewBox="0 0 280 170" xmlns="http://www.w3.org/2000/svg" style="max-width:230px">
+  <g fill="none" stroke="#2C1810" stroke-width="1.5" stroke-linecap="round">
+    <!-- chimney -->
+    <rect x="115" y="80" width="50" height="90" stroke-width="2"/>
+    <rect x="110" y="75" width="60" height="10" stroke-width="1.5"/>
+    <!-- bricks -->
+    <line x1="115" y1="100" x2="165" y2="100" stroke="#8B7355" stroke-width=".5"/>
+    <line x1="115" y1="120" x2="165" y2="120" stroke="#8B7355" stroke-width=".5"/>
+    <line x1="115" y1="140" x2="165" y2="140" stroke="#8B7355" stroke-width=".5"/>
+    <line x1="140" y1="80" x2="140" y2="100" stroke="#8B7355" stroke-width=".5"/>
+    <line x1="130" y1="100" x2="130" y2="120" stroke="#8B7355" stroke-width=".5"/>
+    <line x1="150" y1="120" x2="150" y2="140" stroke="#8B7355" stroke-width=".5"/>
+    <!-- crow body -->
+    <path d="M125 40 Q130 30 145 28 Q160 26 165 35 Q170 45 165 55 Q155 65 140 68 Q125 65 120 55 Q118 48 125 40" stroke-width="1.8"/>
+    <!-- wing detail -->
+    <path d="M155 38 Q170 42 175 52" stroke-width="1"/>
+    <path d="M158 42 Q172 45 176 50" stroke-width=".8"/>
+    <!-- tail -->
+    <path d="M120 55 Q108 58 100 55" stroke-width="1.5"/>
+    <path d="M120 58 Q110 62 102 60" stroke-width="1"/>
+    <!-- beak -->
+    <path d="M165 35 L178 38 L165 42" stroke-width="1.5"/>
+    <!-- ONE glaring eye -->
+    <circle cx="158" cy="36" r="3.5" stroke-width="1.5"/>
+    <circle cx="159" cy="36" r="1.5" fill="#2C1810"/>
+    <!-- feet on chimney edge -->
+    <path d="M135 68 L132 75 M135 68 L138 75" stroke-width="1"/>
+    <path d="M148 66 L145 75 M148 66 L151 75" stroke-width="1"/>
+    <!-- annotation -->
+    <text x="20" y="35" font-family="'Alegreya',serif" font-size="8" fill="#8B7355" font-style="italic">Agnes.</text>
+    <text x="20" y="46" font-family="'Alegreya',serif" font-size="8" fill="#8B7355" font-style="italic">Not amused.</text>
+    <text x="20" y="57" font-family="'Alegreya',serif" font-size="8" fill="#8B7355" font-style="italic">Never amused.</text>
+  </g>
+</svg>`,
   text: `The old schoolhouse was at the north end of town, boarded up and covered in ivy. The crow lived in the chimney. She had lived there for, as she put it, "longer than the school was a school and I will be here after the bricks forget what a school is."
 
 Her name was Agnes. She was the crankiest creature you had ever met.
@@ -463,6 +556,43 @@ She closed her eyes. "I have been so tired," she whispered. "I have been so tire
 },
 
 ending: {
+  illustration: `<svg viewBox="0 0 280 150" xmlns="http://www.w3.org/2000/svg" style="max-width:240px">
+  <g fill="none" stroke="#2C1810" stroke-width="1.5" stroke-linecap="round">
+    <!-- left page -->
+    <path d="M30 20 L130 20 Q140 20 140 25 L140 130 Q140 135 130 135 L30 135 Z" stroke-width="1.5"/>
+    <!-- right page -->
+    <path d="M140 25 Q140 20 150 20 L250 20 L250 135 L150 135 Q140 135 140 130" stroke-width="1.5"/>
+    <!-- spine -->
+    <line x1="140" y1="20" x2="140" y2="135" stroke-width="2"/>
+    <!-- writing lines left page -->
+    <line x1="45" y1="40" x2="125" y2="40" stroke="#8B7355" stroke-width=".4"/>
+    <line x1="45" y1="52" x2="125" y2="52" stroke="#8B7355" stroke-width=".4"/>
+    <line x1="45" y1="64" x2="125" y2="64" stroke="#8B7355" stroke-width=".4"/>
+    <line x1="45" y1="76" x2="125" y2="76" stroke="#8B7355" stroke-width=".4"/>
+    <line x1="45" y1="88" x2="125" y2="88" stroke="#8B7355" stroke-width=".4"/>
+    <line x1="45" y1="100" x2="125" y2="100" stroke="#8B7355" stroke-width=".4"/>
+    <line x1="45" y1="112" x2="125" y2="112" stroke="#8B7355" stroke-width=".4"/>
+    <!-- writing on left page (squiggles) -->
+    <path d="M50 38 Q60 36 70 38 Q80 40 90 38 Q100 36 110 38" stroke="#5C4033" stroke-width=".6"/>
+    <path d="M50 50 Q58 48 68 50 Q78 52 88 50 Q95 48 105 50" stroke="#5C4033" stroke-width=".6"/>
+    <path d="M50 62 Q62 60 72 62 Q82 64 92 62 Q100 60 112 62" stroke="#5C4033" stroke-width=".6"/>
+    <path d="M50 74 Q60 72 70 74 Q80 76 88 74 Q96 72 108 74" stroke="#5C4033" stroke-width=".6"/>
+    <path d="M50 86 Q58 84 68 86 Q78 88 85 86" stroke="#5C4033" stroke-width=".6"/>
+    <!-- right page: "Thornwick" header -->
+    <text x="195" y="38" font-family="'Alegreya',serif" font-size="10" fill="#2C1810" text-anchor="middle" font-weight="700" font-style="italic">Thornwick</text>
+    <!-- lines on right page -->
+    <path d="M155 52 Q165 50 175 52 Q185 54 195 52 Q205 50 215 52 Q225 54 235 52" stroke="#5C4033" stroke-width=".5"/>
+    <path d="M155 64 Q165 62 175 64 Q185 66 195 64 Q208 62 220 64" stroke="#5C4033" stroke-width=".5"/>
+    <path d="M155 76 Q165 74 175 76 Q185 78 200 76 Q210 74 230 76" stroke="#5C4033" stroke-width=".5"/>
+    <!-- pen -->
+    <line x1="220" y1="95" x2="250" y2="55" stroke="#2C1810" stroke-width="2"/>
+    <path d="M220 95 L217 100 L222 98 Z" fill="#2C1810"/>
+    <!-- ink dot -->
+    <circle cx="218" cy="97" r="1.5" fill="#2C1810" opacity=".4"/>
+    <!-- annotation -->
+    <text x="140" y="148" font-family="'Alegreya',serif" font-size="8" fill="#D4A847" text-anchor="middle" font-style="italic">it's safe now</text>
+  </g>
+</svg>`,
   text: `You walked Edith Thorne down Lantern Road and through the streets of Hollowmist as the sun set. She walked slowly. She held your arm. Her hands were still shaking, but her grip was steady.
 
 Viola was waiting at the front door. She took one look at Edith and opened her arms, and Edith walked into them, and two old women stood in the doorway of a crooked house and held each other for a long time without speaking.
