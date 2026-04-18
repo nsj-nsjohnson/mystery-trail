@@ -39,17 +39,17 @@ function paginate(text, hasIllustration) {
 
     const nextParaWords = i + 1 < paras.length ? paras[i + 1].split(/\s+/).length : 0;
 
-    // Break page if we've hit the target and adding next paragraph would overshoot significantly
-    if (currentWords >= target || (currentWords >= target * 0.7 && currentWords + nextParaWords > target * 1.4)) {
+    // Break page if we've hit the target, but never break under 80 words
+    if (currentWords >= 80 && (currentWords >= target || (currentWords >= target * 0.7 && currentWords + nextParaWords > target * 1.4))) {
       pages.push(current.join("\n\n"));
       current = [];
       currentWords = 0;
     }
   }
   if (current.length > 0) {
-    // If leftover is very small, merge with previous page
+    // If leftover is small, merge with previous page
     const leftoverWords = current.join(" ").split(/\s+/).length;
-    if (pages.length > 0 && leftoverWords < 50) {
+    if (pages.length > 0 && leftoverWords < 80) {
       pages[pages.length - 1] += "\n\n" + current.join("\n\n");
     } else {
       pages.push(current.join("\n\n"));
@@ -58,9 +58,28 @@ function paginate(text, hasIllustration) {
   return pages.length > 0 ? pages : [text];
 }
 
-/* ═══ TEXT WITH VOCAB HIGHLIGHTS ═══ */
-function PText({text,onVT}){return<>{text.split(/(\*\*[^*]+\*\*)/).map((s,i)=>{const m=s.match(/^\*\*(.+)\*\*$/);return m?<span key={i} onClick={e=>{e.stopPropagation();onVT?.(m[1]);}} style={{color:C.gold,fontWeight:700,cursor:"pointer",borderBottom:`1.5px dashed ${C.goldDim}`,transition:"color 0.2s"}}>{m[1]}</span>:<span key={i}>{s}</span>;})}</>;}
-
+/* ═══ TEXT WITH VOCAB HIGHLIGHTS + REINFORCEMENT ═══ */
+function PText({text,onVT,knownWords}){
+  // First pass: split on bold markers
+  const segments = text.split(/(\*\*[^*]+\*\*)/);
+  return<>{segments.map((s,i)=>{
+    const boldMatch=s.match(/^\*\*(.+)\*\*$/);
+    if(boldMatch){
+      return<span key={i} onClick={e=>{e.stopPropagation();onVT?.(boldMatch[1]);}} style={{color:C.gold,fontWeight:700,cursor:"pointer",borderBottom:`1.5px dashed ${C.goldDim}`,transition:"color 0.2s"}}>{boldMatch[1]}</span>;
+    }
+    // Second pass on plain text: find known vocab words for subtle reinforcement
+    if(!knownWords||knownWords.length===0)return<span key={i}>{s}</span>;
+    // Build regex from known words (case insensitive, word boundaries)
+    const escaped=knownWords.map(w=>w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
+    const re=new RegExp(`\\b(${escaped.join('|')})\\b`,'gi');
+    const parts=s.split(re);
+    if(parts.length<=1)return<span key={i}>{s}</span>;
+    return<span key={i}>{parts.map((p,j)=>{
+      const isMatch=knownWords.some(w=>w.toLowerCase()===p.toLowerCase());
+      return isMatch?<span key={j} style={{color:C.textMid,fontWeight:600,transition:"color 0.3s"}} title="You learned this word!">{p}</span>:<span key={j}>{p}</span>;
+    })}</span>;
+  })}</>
+}
 /* ═══ VOCAB POPUP ═══ */
 function VPop({word,def,onClose}){if(!word)return null;return<div onClick={onClose} style={{position:"fixed",inset:0,zIndex:200,display:"flex",alignItems:"center",justifyContent:"center",background:"rgba(0,0,0,.5)",padding:20}}><div onClick={e=>e.stopPropagation()} style={{background:C.paper,borderRadius:8,padding:"24px",maxWidth:320,border:`2px solid ${C.goldDim}`,boxShadow:`0 0 30px rgba(212,168,71,0.15)`,animation:"popIn .2s ease"}}><div style={{display:"flex",alignItems:"center",gap:10,marginBottom:10}}><div style={{width:6,height:6,borderRadius:3,background:C.gold}}/><h3 style={{margin:0,fontFamily:"'Alegreya',serif",fontSize:"1.3rem",color:C.text,fontStyle:"italic"}}>{word}</h3></div><p style={{margin:0,fontSize:".95rem",lineHeight:1.7,color:C.textMid,fontFamily:"'Alegreya',serif"}}>{def||"Keep reading to find out..."}</p><div style={{marginTop:14,fontSize:".75rem",color:C.goldDim,fontWeight:700,fontFamily:"'Nunito',sans-serif"}}>✦ Added to your journal</div></div></div>;}
 
@@ -183,7 +202,14 @@ export default function App(){
   const sc=sid?scenes[sid]:null;
   const lv=LEVELS[lvl];
   const name=playerName||"Detective";
-  const gt=s=>(s?.text||"").replace(/\{C\}/g,"Hemlock").replace(/\{NAME\}/g,name);
+  // Select text based on reading level: Beginner(0), Growing(1), Explorer(2)
+  const gt=s=>{
+    if(!s)return"";
+    let raw=s.text||"";
+    if(lvl===0&&s.textBeginner)raw=s.textBeginner;
+    else if(lvl===2&&s.textExplorer)raw=s.textExplorer;
+    return raw.replace(/\{C\}/g,"Hemlock").replace(/\{NAME\}/g,name);
+  };
 
   const hasIll=sc&&(sc.illustrationImg||sc.illustration);
   const pages=useMemo(()=>sc?paginate(gt(sc),!!hasIll):[], [sid,lvl,playerName]);
@@ -214,16 +240,21 @@ export default function App(){
     add(scene.newClues,setClues);add(scene.newPeople,setPeople);add(scene.newPlaces,setPlaces);
     if(ch)setJrnlB(true);};
 
-  // On scene change: collect data, set ambient, save game
+  // On scene change: collect data, set ambient
   useEffect(()=>{
     if(!sc||!sid)return;
     collectScene(sc);
     if(sOn)snd(()=>setAmbientMood(sc.mood||"neutral",sOn));
-    // Auto-save
-    if(caseId&&sid){
-      saveGame({caseId,sid,hist,clues,people,places,words:words.map(w=>({word:w.word,def:w.def})),playerName,flags,page:0});
-    }
   },[sid]);
+
+  // Dedicated save effect: fires when any saveable state changes
+  useEffect(()=>{
+    if(!caseId||!sid||scr!=="play")return;
+    const timer=setTimeout(()=>{
+      saveGame({caseId,sid,hist,clues,people,places,words:words.map(w=>({word:w.word,def:w.def})),playerName,flags,page:0});
+    },300);
+    return()=>clearTimeout(timer);
+  },[sid,hist,clues,people,places,words,flags,caseId,playerName,scr]);
 
   // Page turn with fade
   const turnPage=(newPage)=>{
@@ -271,7 +302,7 @@ export default function App(){
   /* ═══ PICKER ═══ */
   if(scr==="picker")return(
     <div style={{minHeight:"100vh",background:C.bg,fontFamily:"'Nunito',sans-serif",padding:"40px 20px"}}>
-      <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/><style>{CSS}</style>
+      <style>{CSS}</style>
       <div style={{maxWidth:440,margin:"0 auto"}}>
         <div style={{textAlign:"center",marginBottom:32}}>
           <div style={{fontSize:".7rem",letterSpacing:5,color:C.goldDim,fontWeight:800,textTransform:"uppercase",marginBottom:10}}>The Field Journal of</div>
@@ -303,7 +334,7 @@ export default function App(){
   /* ═══ SETUP ═══ */
   if(scr==="setup"&&activeCase){const m=activeCase.meta;return(
     <div style={{minHeight:"100vh",background:C.bg,fontFamily:"'Nunito',sans-serif",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:20}}>
-      <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/><style>{CSS}</style>
+      <style>{CSS}</style>
       <div style={{maxWidth:420,width:"100%"}}>
         <button onClick={backToPicker} style={{...tBtn,marginBottom:16}}>← All Cases</button>
         <div style={{background:C.paper,borderRadius:4,padding:"40px 32px",position:"relative",boxShadow:`0 4px 24px rgba(0,0,0,.4), inset 0 0 60px rgba(139,115,85,.15)`,border:`2px solid ${C.paperEdge}`,marginBottom:20}}>
@@ -341,7 +372,7 @@ export default function App(){
   if(!sc)return null;
   return(
     <div style={{minHeight:"100vh",background:C.bg,fontFamily:"'Nunito',sans-serif",display:"flex",flexDirection:"column"}}>
-      <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/><style>{CSS}</style>
+      <style>{CSS}</style>
       <VPop word={vP?.word} def={vP?.def} onClose={()=>setVP(null)}/>
       <Journal open={jrnlO} onClose={()=>{setJrnlO(false);setJrnlB(false);}} clues={clues} people={people} places={places} words={words}/>
 
@@ -371,11 +402,11 @@ export default function App(){
                 }
               </div>}
               <div style={{fontFamily:"'Alegreya',serif",fontSize:lv.fs,lineHeight:lv.lh,color:C.text,whiteSpace:"pre-line",opacity:pageFade?0:1,transition:"opacity 0.2s ease"}} key={`${sid}-${page}`}>
-                <PText text={curPage} onVT={hvt}/>
+                <PText text={curPage} onVT={hvt} knownWords={words.map(w=>w.word)}/>
               </div>
             </div>
             {!showCh&&<div style={{padding:"8px 20px 16px",position:"relative",zIndex:1,textAlign:"right"}}>
-              <button onClick={nextPage} style={{background:"none",border:"none",cursor:"pointer",color:C.gold,fontFamily:"'Alegreya',serif",fontSize:".9rem",fontWeight:700,fontStyle:"italic",padding:"8px 0"}}>{isLastPage?"Continue →":"Turn page →"}</button>
+              <button onClick={nextPage} style={{background:"none",border:"none",cursor:"pointer",color:C.gold,fontFamily:"'Alegreya',serif",fontSize:"1rem",fontWeight:700,fontStyle:"italic",padding:"14px 8px",minHeight:48}}>{isLastPage?"Continue →":"Turn page →"}</button>
             </div>}
           </div>
 
@@ -421,7 +452,7 @@ export default function App(){
 }
 
 const cBtn={display:"flex",alignItems:"center",gap:10,background:C.bgMid,border:`1.5px solid ${C.bgLight}`,borderRadius:8,padding:"12px 16px",fontSize:".9rem",fontFamily:"'Nunito',sans-serif",fontWeight:700,color:C.white,cursor:"pointer",textAlign:"left",transition:"all .15s",lineHeight:1.4};
-const tBtn={background:C.bgMid,border:`1px solid ${C.bgLight}`,borderRadius:8,padding:"6px 10px",cursor:"pointer",fontSize:".85rem",color:C.goldDim,fontFamily:"'Nunito',sans-serif",fontWeight:700};
+const tBtn={background:C.bgMid,border:`1px solid ${C.bgLight}`,borderRadius:8,padding:"10px 14px",cursor:"pointer",fontSize:".9rem",color:C.goldDim,fontFamily:"'Nunito',sans-serif",fontWeight:700,minHeight:44};
 const CSS=`
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes popIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}

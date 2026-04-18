@@ -47,7 +47,7 @@ But something caught your eye. An entry from 1963, the year after Thornwick disa
 
 That was all. No follow-up. No explanation of why she destroyed it or why she regretted doing so.
 
-Hemlock, reading over your shoulder (a thing he did without apology), made a small sound. "Helena destroyed it," he said, quietly. "I remember. She was afraid that **anything** from Thornwick, even a flower, might be a thread. A thread that could be pulled."
+Hemlock, reading over your shoulder (a thing he did without apology), made a small sound. "Helena destroyed it," he said, quietly. "I remember. She was afraid that anything from Thornwick, even a flower, might be a thread. A thread that could be pulled."
 
 He was not being dry. He was not being sarcastic. This was Hemlock being careful with something that mattered.
 
@@ -103,7 +103,7 @@ The package was a flat, rectangular bundle wrapped in brown paper and tied with 
 
 "Who left it?" you asked.
 
-Pips wrung his paws. "An old woman. I've never seen her before. She came in just as I was opening. She was small. Bent. She had hands that shook. She set it on the counter and said, 'For the Keeper.' Just that. Then she walked out. She was **crying**, {NAME}. Silently. Like someone who has been crying for a very long time and has gotten quiet about it."
+Pips wrung his paws. "An old woman. I've never seen her before. She came in just as I was opening. She was small. Bent. She had hands that shook. She set it on the counter and said, 'For the Keeper.' Just that. Then she walked out. She was crying, {NAME}. Silently. Like someone who has been crying for a very long time and has gotten quiet about it."
 
 You unwrapped the package. Inside was a hand-drawn map. The ink was fresh. The detail was extraordinary: streets, houses, a school, a park with a fountain, a church with a crooked steeple. Every building labeled in small, careful handwriting. At the top, in letters that trembled slightly: **THORNWICK. As I remember it.**
 
@@ -205,7 +205,7 @@ Hemlock, from the windowsill, spoke carefully. "The seal works in both direction
 "She needs to hear this. If Edith Thorne has found a way to reverse the erasure, she has also found a way to reopen the wound. And a wound that was closed sixty years ago does not open neatly." He looked at you. "The last time a Mistwalker came through, things disappeared. Street names. Mailboxes. If someone **deliberately** opens the seal, what comes through will not stop at mailboxes."
 
 Viola stood up. "We need to find her before she does anything. {NAME}, she left that map at the post office. She told Pips it was for the Keeper. That means she wants to be found. She's asking for help, or she's asking for permission, or she's **warning** us. I need to know which."`,
-  vocab: { theoretically:"In theory, meaning it could work in idea but maybe not in practice", warning:"A message about danger that hasn't happened yet" },
+  vocab: { theoretically:"In theory, meaning it could work in idea but maybe not in practice", warning:"A message about danger that hasn't happened yet" , deliberately:"On purpose, with careful thought" },
   companion: `She sent the map TO us. That matters. A person who wanted to destroy the town wouldn't announce it. She is reaching out. The question is what she is reaching for.`,
   newClues: ["Pulling Thornwick back means pulling back what ate it", "Opening the seal deliberately would be worse than a Mistwalker break-in", "Edith sent the map TO the Keeper, which means she wants contact, not secrecy"],
   choices: [
@@ -467,7 +467,7 @@ You stood there. You did not look away. You owed her that.
 
 After a long time, she lowered her hands. Her face was wet and her eyes were red and she looked, for the first time since you had met her, like she was not carrying the full weight of a lost town on her shoulders.
 
-"She would be so angry with me," Edith whispered. "She would be **furious**."`,
+"She would be so angry with me," Edith whispered. "She would be furious."`,
   vocab: { waiting:"Being held back for a long time before finally happening" },
   companion: null,
   choices: [
