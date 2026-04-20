@@ -27,15 +27,7 @@ The front garden was thick with plants you didn't recognize. One of them, you wo
 Great-Aunt Viola appeared around the corner, short and sharp-eyed, gray hair escaping from its pins. She looked at you, looked at her watch, looked at you again. "Good. Kitchen. Don't touch the notebook on the table. Tea's almost ready. It might also be on fire." She vanished.
 
 On the kitchen table, in the middle of a mess of maps and old photographs, sat a leather-bound notebook with a brass clasp. Strange symbols were pressed into the cover. It practically **hummed**. Don't touch the notebook, she'd said.`,
-  textBeginner: `The bus dropped you off at the edge of a small town called Hollowmist. It was getting dark. You pulled your suitcase down the bumpy main street and tried to remember why you agreed to spend the summer with your Great-Aunt Viola.
 
-A big black raven landed right on your suitcase. "You're late," he said. Yes, in this town, ravens could talk. "I'm Hemlock. Your aunt sent me. She's busy with a missing cat and a bell that won't behave." He flew up to the gate of a tall, crooked house at the top of the lane.
-
-The front garden had strange plants you'd never seen before. One of them turned to look at you as you walked past. The front door was open. Inside you could hear someone talking fast, and something burning on the stove.
-
-Aunt Viola came around the corner. She was short with sharp eyes and messy gray hair. She looked at you, looked at her watch, and said: "Good. Kitchen. Don't touch the notebook on the table. Tea's almost ready. It might be on fire." Then she was gone.
-
-On the kitchen table sat a leather notebook with a brass clasp and strange symbols on the cover. It was almost **humming**, like it was alive. Don't touch the notebook, she'd said.`,
   vocab: { petals:"The colored parts of a flower, usually soft and thin", hummed:"Vibrated with quiet energy, like something alive", humming:"Vibrating with quiet energy, like something alive" },
   companion: `She said don't touch it. I am not telling you what to do. I am simply noting that she said don't touch it.`,
   newPeople: ["Great-Aunt Viola: sharp-eyed, distracted, something burning on the stove"],
@@ -182,21 +174,7 @@ Hemlock went rigid. "Do NOT touch that with bare hands. That feather is a **cond
 He looked around the chamber, then back at you. "There's a rag on the ledger stand. Wrap it. We take it to your aunt. Carefully."
 
 You looked at the feather. You looked at the rag. The feather was RIGHT there.`,
-  textExplorer: `The bell chamber at the summit was smaller than you expected. A single iron bell, enormous, hung from chains thick as your forearm, suspended over a wooden stand that held an open ledger. The ledger contained rows of pencil entries stretching back years, each one the same: 12. 12. 12. 12. The bell ringer's nightly record. Twelve rings for the seal. Twelve rings for safety.
 
-Then last night's entry. "13." But not written in pencil. Written in something rust-brown and thin that had dried in streaks, the way blood dries when it's applied with a finger rather than a pen.
-
-"That is blood," Hemlock said, landing on the ledger stand with the clinical calm of a forensic investigator. "Applied deliberately. That is a **signature**, not an accident. Whoever did this wanted the record to show they were here."
-
-You searched the chamber systematically, the way Aunt Viola had taught you: corners first, then surfaces, then angles where walls met floor. In the far northeast corner, where two blocks of stone met at an awkward **seam**, something caught the fading light from the slit window. A feather.
-
-It was long, thin, and a matte black that troubled your eyes. Not the glossy black of Hemlock's plumage, which caught and returned light like polished stone. This black was absorptive. It seemed to pull the light into itself and give nothing back, creating a small void in the visual field that your brain kept trying to correct. Even from several inches away, the cold radiating from it was unmistakable, a localized temperature drop of at least fifteen degrees.
-
-Hemlock went rigid. Every feather on his body lifted and then pressed flat. "Do NOT touch that with bare hands. That feather is a **conduit**. The creature that shed it left a piece of its own consciousness embedded in the barbs. If you make skin contact, it will know you exist. It will see through the feather into you, your face, your name, your location. Everything."
-
-He looked around the chamber with quick, precise movements. "There is a cotton rag on the ledger stand. Cotton does not conduct. Wrap the feather. We take it to Viola. Carefully."
-
-The feather was right there, inches from your hand, pulsing cold like a heartbeat.`,
   vocab: { signature:"A mark left to show who was responsible", conduit:"A channel that connects two things, letting something pass between them" , seam:"Where two edges meet, a joint or crack between surfaces"},
   companion: `I cannot stress this enough. Do not touch it with your hands. I realize I have the credibility problem of having also told you not to go to the tower and here we are. But THIS time I mean it.`,
   newClues: ["The '13' was written in blood, like a signature", "A cold black feather that absorbs light", "Hemlock says touching it will alert whatever left it"],
@@ -473,15 +451,7 @@ She reached into a wooden box and pulled out an iron nail, long and heavy. She h
 She set the nail in your hand. It was colder than the room and heavier than it should be.
 
 "Now. He's going for the owl tonight. I'm sure of it. But we need to know where he's working from, because if we know that, we know his timing. We have two options."`,
-  textBeginner: `Viola led you down stone stairs below the kitchen. Way below. The room at the bottom was round, carved out of rock. In the middle of the floor, someone had drawn a circle using silver paint. Inside the circle, the air looked wavy, like heat off a road in summer. But it was cold. Your breath turned white.
 
-"That is the thin place," Viola said. "A crack between our world and something else. Three animals keep it sealed shut. A cat. An owl. A crow. Marmalade was the cat. She's gone. That's why things are vanishing in town."
-
-She pulled a long iron nail from a box and held it out to you.
-
-"This was Helena's. She never got to use it. Iron breaks his bottle. That's how he catches the animals that guard the seal." She set the nail in your hand. It was very cold and heavy.
-
-"He's going after the owl tonight. We need to find out where he's been working."`,
   vocab: { chamber:"A large enclosed room, usually underground" },
   companion: `The nail is yours now. Do not lose it. Do not put it down. It belonged to someone who carried it into the dark and did not come back. Carry it better than she did.`,
   newPlaces: ["The chamber beneath the house: the thin place, the seal"],
